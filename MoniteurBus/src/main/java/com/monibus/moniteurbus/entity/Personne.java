@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "personnes")
 @MappedSuperclass
 public class Personne {
     @Id
