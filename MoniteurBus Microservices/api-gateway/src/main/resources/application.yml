@@ -1,0 +1,43 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ecole
+          uri: lb://ECOLE
+          predicates:
+              - Path=/api/v1/ecole/**
+        - id: bus
+          uri: lb://BUS
+          predicates:
+              - Path=/api/v1/bus/**
+        - id: utilisateur
+          uri: lb://UTILISATEUR
+          predicates:
+              - Path=/api/v1/utilisateur/**
+        - id: Notification
+          uri: lb://NOTIFICATION
+          predicates:
+              - Path=/api/v1/notification/**
+        - id: location
+          uri: lb://LOCATION
+          predicates:
+              - Path=/api/location/**
+        - id: etudiant
+          uri: lb://ETUDIANT
+          predicates:
+              - Path=/api/v1/etudiant/**
+
+
+server:
+  port: 3333
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true

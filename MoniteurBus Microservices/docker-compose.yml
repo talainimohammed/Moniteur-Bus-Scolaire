@@ -1,0 +1,109 @@
+version: '3.1'
+
+services:
+  ecole-db:
+    container_name: ecole-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ecole_microservice
+      POSTGRES_PASSWORD: ecole_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - ecole-db:/data/postgres
+    ports:
+      - "5228:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  notification-db:
+    container_name: notificationbus-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: notification_microservice
+      POSTGRES_PASSWORD: notification_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - notification-db:/data/postgres
+    ports:
+      - "5227:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  bus-db:
+    container_name: bus-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: bus_microservice
+      POSTGRES_PASSWORD: bus_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - bus-db:/data/postgres
+    ports:
+      - "5225:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  etudiant-db:
+    container_name: etudiant-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: etudiant_microservice
+      POSTGRES_PASSWORD: etudiant_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - etudiant-db:/data/postgres
+    ports:
+      - "5224:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  utilisateur-db:
+    container_name: utilisateur-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: utilisateur_microservice
+      POSTGRES_PASSWORD: utilisateur_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - utilisateur-db:/data/postgres
+    ports:
+      - "5226:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  location-db:
+    container_name: location-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: location_microservice
+      POSTGRES_PASSWORD: location_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - location-db:/data/postgres
+    ports:
+      - "5223:5432"
+    networks:
+      - db
+    restart: unless-stopped
+  zipkin:
+    container_name: zipkinmonitor
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  ecole-db:
+  etudiant-db:
+  utilisateur-db:
+  location-db:
+  bus-db:
+  notification-db:

@@ -1,0 +1,16 @@
+
+<div id="wrapper">
+  <app-sidenav></app-sidenav>
+  <div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+      <app-topnav></app-topnav>
+        <router-outlet></router-outlet>
+    </div>
+      <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+          <div class="text-center my-auto copyright"><span>Copyright © Monitor Bus 2024</span></div>
+        </div>
+      </footer>
+  </div>
+  <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>

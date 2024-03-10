@@ -8,7 +8,7 @@ public interface IUtilisateur {
 
     public UtilisateurDTO addUtilisateur(UtilisateurDTO utilisateurDTO);
     public UtilisateurDTO modUtilisateur(UtilisateurDTO utilisateurDTO);
-    public List<UtilisateurDTO> afficherUtilisateur();
+    public List<UtilisateurDTO> afficherUtilisateurs();
     public UtilisateurDTO afficherUtilisateurById(long id);
     public boolean delUtilisateur(long id);
 }

@@ -1,48 +1,48 @@
 package com.monibus.moniteurbus.service.serviceImp;
 
 import com.monibus.moniteurbus.dto.BusDTO;
-import com.monibus.moniteurbus.dto.UtilisateurDTO;
 import com.monibus.moniteurbus.entity.Bus;
 import com.monibus.moniteurbus.entity.Ecole;
 import com.monibus.moniteurbus.entity.Utilisateur;
 import com.monibus.moniteurbus.repository.BusRepository;
 import com.monibus.moniteurbus.service.IBus;
+import com.monibus.moniteurbus.service.IEcole;
+import com.monibus.moniteurbus.service.IUtilisateur;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class BusService implements IBus {
 
     private BusRepository busRepository;
-    private UtilisateurService  utilisateurService;
-    private EcoleService ecoleService;
+    private IUtilisateur iUtilisateur;
+    private IEcole iEcole;
     private ModelMapper modelMapper;
-    public BusService(BusRepository busRepository,EcoleService ecoleService,UtilisateurService utilisateurService, ModelMapper modelMapper) {
+    public BusService(BusRepository busRepository, IUtilisateur iUtilisateur, IEcole iEcole, ModelMapper modelMapper) {
         this.busRepository=busRepository;
-        this.utilisateurService=utilisateurService;
-        this.ecoleService=ecoleService;
+        this.iUtilisateur=iUtilisateur;
+        this.iEcole=iEcole;
         this.modelMapper=modelMapper;
     }
 
     @Override
     public BusDTO addBus(BusDTO busDTO) {
         if (busDTO==null)throw new NullPointerException();
-        Utilisateur utilisateur=modelMapper.map(utilisateurService.afficherUtilisateurById(busDTO.getIdChauffeur()),Utilisateur.class);
-        Ecole ecole=modelMapper.map(ecoleService.afficherEcoleById(busDTO.getIdEcole()), Ecole.class);
+        Utilisateur utilisateur=modelMapper.map(iUtilisateur.afficherUtilisateurById(busDTO.getIdChauffeur()),Utilisateur.class);
+        Ecole ecole=modelMapper.map(iEcole.afficherEcoleById(busDTO.getIdEcole()), Ecole.class);
         Bus bus=modelMapper.map(busDTO, Bus.class);
         bus.setChauffeur(utilisateur);
         bus.setEcole(ecole);
         return this.modelMapper.map(busRepository.save(bus),BusDTO.class);
     }
 
-
-
-
     @Override
     public BusDTO modBus(BusDTO busDTO) {
         if (busDTO==null)throw new NullPointerException();
-        Utilisateur utilisateur=modelMapper.map(utilisateurService.afficherUtilisateurById(busDTO.getIdChauffeur()),Utilisateur.class);
-        Ecole ecole=modelMapper.map(ecoleService.afficherEcoleById(busDTO.getIdEcole()), Ecole.class);
+        Utilisateur utilisateur=modelMapper.map(iUtilisateur.afficherUtilisateurById(busDTO.getIdChauffeur()),Utilisateur.class);
+        Ecole ecole=modelMapper.map(iEcole.afficherEcoleById(busDTO.getIdEcole()), Ecole.class);
         Bus bus=modelMapper.map(busDTO, Bus.class);
         bus.setChauffeur(utilisateur);
         bus.setEcole(ecole);
@@ -58,12 +58,16 @@ public class BusService implements IBus {
 
     @Override
     public BusDTO afficherBus(long id) {
-        Bus bus=busRepository.findById(id).get();
+        Bus bus=busRepository.findById(id).orElse(null);
+        if(bus == null)throw new NullPointerException();
         return modelMapper.map(bus, BusDTO.class);
     }
 
     @Override
     public boolean delBus(long id) {
-        return false;
+        Bus bus=busRepository.findById(id).orElse(null);
+        if(bus == null)throw new NullPointerException();
+        bus.setDeleted(true);
+        return this.busRepository.save(bus).isDeleted();
     }
 }
