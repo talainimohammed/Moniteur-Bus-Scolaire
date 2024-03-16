@@ -47,7 +47,7 @@ export class EcoleComponent implements OnInit{
     };
     console.log(data);
     
-    /*this.ecoleService.createEcole(data)
+    this.ecoleService.createEcole(data)
       .subscribe(
         response => {
           console.log(response);
@@ -55,7 +55,7 @@ export class EcoleComponent implements OnInit{
         },
         error => {
           console.log(error);
-        });*/
+        });
   }
 
 }

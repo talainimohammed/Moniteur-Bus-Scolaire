@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EtudiantService } from '../../../services/etudiant.service';
 import { Etudiant } from '../../../models/etudiant';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-etudiant-profile',
@@ -22,17 +23,23 @@ export class EtudiantProfileComponent implements OnInit{
     longtitude:0,
     ecoleId:0
   };
+  id:number=0;
   submitted=false;
-  constructor(private etudiantservice:EtudiantService) { }
+  constructor(private etudiantservice:EtudiantService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-   // this.retrieveEtudiant(1);
+    if(this.route.snapshot.params['id']!=null){
+      this.id= this.route.snapshot.params['id'];
+    }
+    if(this.id!=0){
+      this.retrieveEtudiant(this.id);
+    }
   }
 
   retrieveEtudiant(id:any){
     this.etudiantservice.getEtudiant(id).subscribe(
       data=>{
-        console.log(data);
+        this.etudiant=data;
       },
       error=>{
         console.log(error);
@@ -45,6 +52,7 @@ export class EtudiantProfileComponent implements OnInit{
       prenom:this.etudiant.prenom,
       adresse:this.etudiant.adresse,
       dateNaissance:this.etudiant.dateNaissance,
+      email:this.etudiant.email,
       tel:this.etudiant.tel,
       niveau:this.etudiant.niveau,
       busId:1,
@@ -55,22 +63,31 @@ export class EtudiantProfileComponent implements OnInit{
     };
     console.log(data);
     
-    /*this.etudiantservice.createEtudiant(data).subscribe(
+    this.etudiantservice.createEtudiant(data).subscribe(
       response=>{
         console.log(response);
       },
       error=>{
         console.log(error);
       }
-    );*/
+    );
   }
-  updateEtudiant(){
+  updateEtudiant(id:number){
     const data={
-      nom:"test",
-      prenom:"test",
-      email:""
+      nom:this.etudiant.nom,
+      prenom:this.etudiant.prenom,
+      adresse:this.etudiant.adresse,
+      dateNaissance:this.etudiant.dateNaissance,
+      email:this.etudiant.email,
+      tel:this.etudiant.tel,
+      niveau:this.etudiant.niveau,
+      busId:this.etudiant.busId,
+      locationId:this.etudiant.locationId,
+      latitude:this.etudiant.latitude,
+      longtitude:this.etudiant.longtitude,
+      ecoleId:this.etudiant.ecoleId
     };
-    this.etudiantservice.updateEtudiant(1,data).subscribe(
+    this.etudiantservice.updateEtudiant(id,data).subscribe(
       response=>{
         console.log(response);
       },

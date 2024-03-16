@@ -6,6 +6,7 @@ import {BusComponent} from "./component/bus/bus.component";
 import {ChauffeurComponent} from "./component/chauffeur/chauffeur.component";
 import {NgModule} from "@angular/core";
 import {EtudiantProfileComponent} from "./component/etudiant/etudiant-profile/etudiant-profile.component";
+import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profile/chauffeur-profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,7 +15,9 @@ export const routes: Routes = [
   { path: 'eleves', component: EtudiantComponent },
   { path: 'bus', component: BusComponent },
   { path: 'chauffeurs', component: ChauffeurComponent },
+  { path: 'chauffeur', component: ChauffeurProfileComponent },
   { path: 'eleve', component: EtudiantProfileComponent },
+  { path: 'eleve/:id', component: EtudiantProfileComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
 @NgModule({

@@ -2,6 +2,7 @@ package com.monibus.etudiantmicroservice.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 public class EtudiantDTO {
@@ -9,7 +10,8 @@ public class EtudiantDTO {
     private String nom;
     private String prenom;
     private String adresse;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
+    private String email;
     private String tel;
     private String niveau;
     private long busId;

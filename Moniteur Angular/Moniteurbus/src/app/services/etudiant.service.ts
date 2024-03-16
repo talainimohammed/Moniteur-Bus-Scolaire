@@ -9,7 +9,7 @@ import { environment } from '../environments/env';
 })
 export class EtudiantService {
 
-  private apiurl = environment.urlapi + "/etudiants";
+  private apiurl = environment.urlapi + "/etudiant";
 
   constructor(private httpclient: HttpClient) { }
 

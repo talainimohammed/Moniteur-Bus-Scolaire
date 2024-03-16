@@ -1,5 +1,6 @@
 package com.monibus.utilisateurmicroservice.controller;
 
+import com.monibus.utilisateurmicroservice.Enum.RoleEnum;
 import com.monibus.utilisateurmicroservice.dto.UtilisateurDTO;
 import com.monibus.utilisateurmicroservice.service.IUtilisateur;
 import jakarta.validation.Valid;
@@ -24,6 +25,11 @@ public class UtilisateurContoller {
     @GetMapping
     public ResponseEntity<List<UtilisateurDTO>> tousUtilisateurs(){
         List<UtilisateurDTO> utilisateurDTOS=this.iUtilisateur.afficherUtilisateurs();
+        return new ResponseEntity<>(utilisateurDTOS, HttpStatus.OK);
+    }
+    @GetMapping("/role/{role}")
+    public ResponseEntity<List<UtilisateurDTO>> tousUtilisateursparRole(@PathVariable(value = "role") int role){
+        List<UtilisateurDTO> utilisateurDTOS=this.iUtilisateur.afficherUtilisateurByRole(role);
         return new ResponseEntity<>(utilisateurDTOS, HttpStatus.OK);
     }
     @GetMapping("/{id}")

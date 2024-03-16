@@ -13,35 +13,37 @@ import { BusComponent } from './component/bus/bus.component';
 import { UtilisateurComponent } from './component/utilisateur/utilisateur.component';
 import { EtudiantComponent } from './component/etudiant/etudiant.component';
 import { EtudiantProfileComponent } from './component/etudiant/etudiant-profile/etudiant-profile.component';
+import { SearchetudiantPipe } from "./pipe/searchetudiant.pipe";
+import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profile/chauffeur-profile.component';
 
 
 @NgModule({
-  declarations: [
-     AppComponent,
-     SidenavComponent, 
-     TopnavComponent,
-     EcoleComponent,
-     ChauffeurComponent,
-     BusComponent,
-     UtilisateurComponent,
-     EtudiantComponent,
-     EtudiantProfileComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
-  providers: [
-    DatePipe,
-    ReactiveFormsModule,
-    FormsModule,
-    
-  ],
-
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SidenavComponent,
+        TopnavComponent,
+        EcoleComponent,
+        ChauffeurComponent,
+        ChauffeurProfileComponent,
+        BusComponent,
+        UtilisateurComponent,
+        EtudiantComponent,
+        EtudiantProfileComponent
+    ],
+    providers: [
+        DatePipe,
+        ReactiveFormsModule,
+        FormsModule,
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        SearchetudiantPipe
+    ]
 })
 export class AppModule {
   constructor() {

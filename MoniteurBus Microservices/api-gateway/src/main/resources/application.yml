@@ -5,6 +5,14 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
       routes:
         - id: ecole
           uri: lb://ECOLE
@@ -30,6 +38,7 @@ spring:
           uri: lb://ETUDIANT
           predicates:
               - Path=/api/v1/etudiant/**
+
 
 
 server:

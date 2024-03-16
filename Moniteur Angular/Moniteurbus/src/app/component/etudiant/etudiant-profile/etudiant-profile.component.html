@@ -74,14 +74,19 @@
                   <div class="row">
                     <div class="col">
                       <div class="mb-3"><label class="form-label" for="city"><strong>Longitude</strong></label>
-                        <input class="form-control" type="text" id="city-1" placeholder="Los Angeles" [(ngModel)]="etudiant.longtitude" name="city"></div>
+                        <input class="form-control" type="text" id="city-1" placeholder="0.252352" [(ngModel)]="etudiant.longtitude" name="longtitude"></div>
                     </div>
                     <div class="col">
                       <div class="mb-3"><label class="form-label" for="country"><strong>Latitude</strong></label>
-                        <input class="form-control" type="text" id="country-1" placeholder="USA" [(ngModel)]="etudiant.latitude" name="country"></div>
+                        <input class="form-control" type="text" id="country-1" placeholder="0.25355" [(ngModel)]="etudiant.latitude" name="latitude"></div>
                     </div>
                   </div>
-                  <div class="mb-3"><button class="btn btn-primary btn-sm" (click)="saveEtudiant()" type="submit">Enregistrer</button></div>
+                  <div class="mb-3" *ngIf="id==0">
+                    <button class="btn btn-primary btn-sm" (click)="saveEtudiant()" type="submit">Enregistrer</button>
+                  </div>
+                  <div class="mb-3" *ngIf="id!=0">
+                    <button class="btn btn-primary btn-sm" (click)="updateEtudiant(etudiant.etudiantId || 0)" type="submit">Modifer</button>
+                  </div>
               </div>
             </div>
           </form>

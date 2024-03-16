@@ -1,5 +1,6 @@
 package com.monibus.utilisateurmicroservice.service.serviceImp;
 
+import com.monibus.utilisateurmicroservice.Enum.RoleEnum;
 import com.monibus.utilisateurmicroservice.dto.UtilisateurDTO;
 import com.monibus.utilisateurmicroservice.entity.Utilisateur;
 import com.monibus.utilisateurmicroservice.repository.UtilisateurRepository;
@@ -45,6 +46,15 @@ public class UtilisateurService implements IUtilisateur {
         if (utilisateur==null)throw new NotFoundException("Utilisateur non trouvé");
         return modelMapper.map(utilisateur,UtilisateurDTO.class);
     }
+
+    @Override
+    public List<UtilisateurDTO> afficherUtilisateurByRole(int roleEnum) {
+        List<Utilisateur> utilisateurs=this.utilisateurRepository.findAllByRoleEnumAndDeletedFalse(RoleEnum.getRoleEnum(roleEnum));
+        if (utilisateurs!=null)
+            return utilisateurs.stream().map(u->modelMapper.map(u,UtilisateurDTO.class)).toList();
+        return null;
+    }
+
 
     @Override
     public boolean delUtilisateur(long id) {

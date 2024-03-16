@@ -9,6 +9,9 @@ import com.monibus.location.LocationDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,6 +54,7 @@ public class EtudiantService implements IEtudiant {
         etudiantDTO1.setAdresse(etudiantDTO.getAdresse());
         etudiantDTO1.setDateNaissance(etudiantDTO.getDateNaissance());
         etudiantDTO1.setTel(etudiantDTO.getTel());
+        etudiantDTO1.setEmail(etudiantDTO.getEmail());
         etudiantDTO1.setNiveau(etudiantDTO.getNiveau());
         etudiantDTO1.setBusId(etudiantDTO.getBusId());
         etudiantDTO1.setEcoleId(etudiantDTO.getEcoleId());
@@ -88,6 +92,9 @@ public class EtudiantService implements IEtudiant {
         LocationDTO locationDTO=this.locationClient.getLocation(etudiant.getLocationId()).getBody();
         if(locationDTO==null) throw new NullPointerException();
         EtudiantDTO etudiantDTO=modelMapper.map(etudiant,EtudiantDTO.class);
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+        //LocalDate date=LocalDate.parse(dt1.format(etudiant.getDateNaissance()));
+        //etudiantDTO.setDateNaissance(date);
         etudiantDTO.setLatitude(locationDTO.getLatitude());
         etudiantDTO.setLongtitude(locationDTO.getLongtitude());
         return etudiantDTO;
