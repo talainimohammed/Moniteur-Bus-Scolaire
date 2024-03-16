@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -24,10 +25,9 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String adresse;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     private String tel;
-    private String username;
-    private String password;
+    private String email;
     private RoleEnum roleEnum;
     @Column(name = "isDeleted")
     private boolean deleted;

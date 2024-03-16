@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 public class UtilisateurDTO {
@@ -22,19 +23,15 @@ public class UtilisateurDTO {
     @NotEmpty(message = "adresse utilisateur empty")
     @NotNull(message = "adresse utilisateur null")
     private String adresse;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     @NotBlank(message = "tel utilisateur est vide")
     @NotEmpty(message = "tel utilisateur empty")
     @NotNull(message = "tel utilisateur null")
     private String tel;
-    @NotBlank(message = "username utilisateur est vide")
-    @NotEmpty(message = "username utilisateur empty")
-    @NotNull(message = "username utilisateur null")
-    private String username;
-    @NotBlank(message = "password utilisateur est vide")
-    @NotEmpty(message = "password utilisateur empty")
-    @NotNull(message = "password utilisateur null")
-    private String password;
+    @NotBlank(message = "email utilisateur est vide")
+    @NotEmpty(message = "email utilisateur empty")
+    @NotNull(message = "email utilisateur null")
+    private String email;
     private RoleEnum roleEnum;
     private boolean isDeleted;
 

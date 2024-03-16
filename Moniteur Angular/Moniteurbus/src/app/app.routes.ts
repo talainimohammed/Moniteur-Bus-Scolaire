@@ -16,6 +16,7 @@ export const routes: Routes = [
   { path: 'bus', component: BusComponent },
   { path: 'chauffeurs', component: ChauffeurComponent },
   { path: 'chauffeur', component: ChauffeurProfileComponent },
+  { path: 'chauffeur/:id', component: ChauffeurProfileComponent },
   { path: 'eleve', component: EtudiantProfileComponent },
   { path: 'eleve/:id', component: EtudiantProfileComponent },
   { path: '**', redirectTo: '/not-found' }
