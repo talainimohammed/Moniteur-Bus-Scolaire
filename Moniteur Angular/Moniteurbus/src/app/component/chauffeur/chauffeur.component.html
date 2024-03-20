@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-6">
           <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label">
-            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" (keyup)="$event.target" placeholder="Search"></label></div>
+            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" [(ngModel)]="searchetu" (keyup)="$event.target" placeholder="Search"></label></div>
         </div>
       </div>
       <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -32,13 +32,13 @@
           </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let chauffeur of chauffeurs || []">
+            <tr *ngFor="let chauffeur of chauffeurs || [] | searchChauffeur:(searchetu ?? '')">
             <td><img class="rounded-circle me-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg">{{chauffeur.nom}}</td>
             <td>{{chauffeur.prenom}}</td>
             <td>{{chauffeur.adresse}}</td>
             <td>{{chauffeur.tel}}</td>
             <td><a [routerLink]="['/chauffeur',chauffeur.idUtilisateur]"><i class="fa fa-eye fs-5 text-primary"></i></a></td>
-            <td><a><i  class="fa fa-trash fs-5 text-primary"></i></a></td>
+            <td><a (click)="deleteChauffeur(chauffeur.idUtilisateur)"><i  class="fa fa-trash fs-5 text-primary"></i></a></td>
           </tr>
           </tbody>
           <tfoot>

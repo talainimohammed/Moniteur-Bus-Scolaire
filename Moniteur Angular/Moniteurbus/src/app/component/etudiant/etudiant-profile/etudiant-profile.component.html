@@ -53,15 +53,18 @@
               </div>
               <div class="card-body">
                   <div class="mb-3"><label class="form-label" for="busid"><strong>Numero Bus</strong></label>
-                    <input class="form-control" type="number" id="busid" placeholder="201" [(ngModel)]="etudiant.busId" name="busid"></div>
+                    <select name="bus" class="form-control" id="bus" (change)='onChange($event)'   [(ngModel)]="etudiant.busId">
+                      <option *ngFor="let b of bus" [ngValue]="b.idBus">{{b.idBus}}</option>
+                    </select>
+                  </div>
                   <div class="row">
                     <div class="col">
                       <div class="mb-3"><label class="form-label" for="Nchauffeur"><strong>Nom Chauffeurs</strong></label>
-                        <input class="form-control" type="text" id="Nchauffeur" placeholder="Los Angeles" name="Nchauffeur" disabled></div>
+                        <input class="form-control" type="text" id="Nchauffeur" [(ngModel)]="chauffeur.nom" placeholder="Los Angeles" name="Nchauffeur" disabled></div>
                     </div>
                     <div class="col">
                       <div class="mb-3"><label class="form-label" for="telchauffeur"><strong>Tel Chauffeur</strong></label>
-                        <input class="form-control" type="tel" id="telchauffeur" placeholder="321654" name="telchauffeur" disabled></div>
+                        <input class="form-control" type="tel" id="telchauffeur"[(ngModel)]="chauffeur.tel" placeholder="321654" name="telchauffeur" disabled></div>
                     </div>
                   </div>
               </div>

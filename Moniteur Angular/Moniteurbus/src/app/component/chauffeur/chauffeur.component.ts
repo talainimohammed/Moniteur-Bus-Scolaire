@@ -10,6 +10,7 @@ import { ChauffeurService } from '../../services/chauffeur.service';
 export class ChauffeurComponent implements OnInit{
 
   chauffeurs?: Chauffeur[];
+  searchetu?:'';
   constructor(private chauffeurService: ChauffeurService) { }
 
   ngOnInit(): void {
@@ -28,9 +29,14 @@ export class ChauffeurComponent implements OnInit{
   
   }
   deleteChauffeur(id:any){
-    this.chauffeurService.deleteChauffeur(id).subscribe(data=>{
-      this.getChauffeurs();
-    });
+    if(confirm("Voulez vous supprimer ce Chauffeur?")){
+      this.chauffeurService.deleteChauffeur(id).subscribe(data=>{
+        this.getChauffeurs();
+      },
+      error=>{
+        console.log(error);
+      });
+    }
   }
 
 

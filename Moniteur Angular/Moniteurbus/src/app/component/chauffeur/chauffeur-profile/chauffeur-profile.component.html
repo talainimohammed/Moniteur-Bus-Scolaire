@@ -46,7 +46,26 @@
                     </div>
                   </div>
               </div>
-  
+              <div class="card-header py-3">
+                <p class="text-primary m-0 fw-bold">Transport a conduire</p>
+              </div>
+              <div class="card-body">
+                  <div class="mb-3"><label class="form-label" for="busid"><strong>Numero Bus</strong></label>
+                    <select name="bus" class="form-control" id="bus" (change)='onChange($event)' [(ngModel)]="busupdate">
+                      <option *ngFor="let b of bus" [ngValue]="b">{{b.idBus}}</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3"><label class="form-label" for="Nchauffeur"><strong>Matricule</strong></label>
+                        <input class="form-control" type="text" id="Nchauffeur" [(ngModel)]="busupdate.matricule" placeholder="matricule" name="matricule" disabled></div>
+                    </div>
+                    <div class="col">
+                      <div class="mb-3"><label class="form-label" for="telchauffeur"><strong>Nombre de places</strong></label>
+                        <input class="form-control" type="tel" id="telchauffeur"[(ngModel)]="busupdate.nbplaces" placeholder="20" name="nbplace" disabled></div>
+                    </div>
+                  </div>
+              </div>
               <div class="card-header py-3">
                 <p class="text-primary m-0 fw-bold">Localisation Chauffeur</p>
               </div>

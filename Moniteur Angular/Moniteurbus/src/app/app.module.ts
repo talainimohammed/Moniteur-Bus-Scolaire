@@ -15,6 +15,9 @@ import { EtudiantComponent } from './component/etudiant/etudiant.component';
 import { EtudiantProfileComponent } from './component/etudiant/etudiant-profile/etudiant-profile.component';
 import { SearchetudiantPipe } from "./pipe/searchetudiant.pipe";
 import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profile/chauffeur-profile.component';
+import { SearchChauffeurPipe } from "./pipe/search-chauffeur.pipe";
+import { BusProfileComponent } from './component/bus/bus-profile/bus-profile.component';
+import { SearchBusPipe } from "./pipe/search-bus.pipe";
 
 
 @NgModule({
@@ -26,6 +29,7 @@ import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profi
         ChauffeurComponent,
         ChauffeurProfileComponent,
         BusComponent,
+        BusProfileComponent,
         UtilisateurComponent,
         EtudiantComponent,
         EtudiantProfileComponent
@@ -42,7 +46,9 @@ import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profi
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        SearchetudiantPipe
+        SearchetudiantPipe,
+        SearchChauffeurPipe,
+        SearchBusPipe
     ]
 })
 export class AppModule {

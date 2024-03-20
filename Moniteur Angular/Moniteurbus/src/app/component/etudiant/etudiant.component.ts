@@ -30,5 +30,19 @@ export class EtudiantComponent implements OnInit{
     );
   }
 
+  deleteEtudiant(id:number){
+      if(confirm("Voulez vous supprimer ce Etudiant?")){
+        this.etudiantService.deleteEtudiant(id).subscribe(
+          data=>{
+            console.log(data);
+            this.retrieveEtudiants();
+          },
+          error=>{
+            console.log(error);
+          }
+        );
+    }
+  }
+
 
 }

@@ -34,8 +34,8 @@ public class BusService implements IBus {
     @Override
     public BusDTO addBus(BusDTO busDTO) {
         if (busDTO==null)throw new NullPointerException();
-        UtilisateurDTO utilisateurDTO=utilisateurClient.getUtilisateur(busDTO.getIdchauffeur()).getBody();
-        if (utilisateurDTO==null)throw new NotFoundException("Chauffeur not found");
+        //UtilisateurDTO utilisateurDTO=utilisateurClient.getUtilisateur(busDTO.getIdchauffeur()).getBody();
+        //if (utilisateurDTO==null)throw new NotFoundException("Chauffeur not found");
         EcoleDTO ecoleDTO=ecoleClient.getEcole(busDTO.getIdecole()).getBody();
         if (ecoleDTO==null)throw new NotFoundException("Ecole not found");
         Bus bus=modelMapper.map(busDTO, Bus.class);
@@ -47,17 +47,20 @@ public class BusService implements IBus {
         if (busDTO==null)throw new NullPointerException();
         Bus bus=busRepository.findById(id).orElse(null);
         if(bus == null)throw new NotFoundException("Bus not found");
-        UtilisateurDTO utilisateurDTO=utilisateurClient.getUtilisateur(busDTO.getIdchauffeur()).getBody();
-        if (utilisateurDTO==null)throw new NotFoundException("Chauffeur not found");
+        if(busDTO.getIdchauffeur()!=0){
+            UtilisateurDTO utilisateurDTO=utilisateurClient.getUtilisateur(busDTO.getIdchauffeur()).getBody();
+            if (utilisateurDTO==null)throw new NotFoundException("Chauffeur not found");
+        }
         EcoleDTO ecoleDTO=ecoleClient.getEcole(busDTO.getIdecole()).getBody();
         if (ecoleDTO==null)throw new NotFoundException("Ecole not found");
         Bus bus1=modelMapper.map(busDTO, Bus.class);
+        bus1.setIdBus(id);
         return this.modelMapper.map(busRepository.save(bus1),BusDTO.class);
     }
 
     @Override
     public List<BusDTO> afficherBuses() {
-        List<Bus> buses=busRepository.findAll();
+        List<Bus> buses=busRepository.findByDeletedFalse();
         List<BusDTO> busDTOS=buses.stream().map(b->modelMapper.map(b,BusDTO.class)).toList();
         return busDTOS;
     }
