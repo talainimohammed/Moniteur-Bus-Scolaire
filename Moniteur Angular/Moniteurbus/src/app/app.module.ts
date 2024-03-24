@@ -18,7 +18,8 @@ import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profi
 import { SearchChauffeurPipe } from "./pipe/search-chauffeur.pipe";
 import { BusProfileComponent } from './component/bus/bus-profile/bus-profile.component';
 import { SearchBusPipe } from "./pipe/search-bus.pipe";
-
+import { SuiviBusComponent } from './component/suivi-bus/suivi-bus.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { SearchBusPipe } from "./pipe/search-bus.pipe";
         BusProfileComponent,
         UtilisateurComponent,
         EtudiantComponent,
-        EtudiantProfileComponent
+        EtudiantProfileComponent,
+        SuiviBusComponent
     ],
     providers: [
         DatePipe,
@@ -48,7 +50,8 @@ import { SearchBusPipe } from "./pipe/search-bus.pipe";
         HttpClientModule,
         SearchetudiantPipe,
         SearchChauffeurPipe,
-        SearchBusPipe
+        SearchBusPipe,
+        GoogleMapsModule
     ]
 })
 export class AppModule {

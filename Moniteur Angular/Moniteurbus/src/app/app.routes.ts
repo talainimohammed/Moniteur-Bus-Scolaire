@@ -8,6 +8,7 @@ import {NgModule} from "@angular/core";
 import {EtudiantProfileComponent} from "./component/etudiant/etudiant-profile/etudiant-profile.component";
 import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profile/chauffeur-profile.component';
 import { BusProfileComponent } from './component/bus/bus-profile/bus-profile.component';
+import { SuiviBusComponent } from './component/suivi-bus/suivi-bus.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'chauffeur/:id', component: ChauffeurProfileComponent },
   { path: 'eleve', component: EtudiantProfileComponent },
   { path: 'eleve/:id', component: EtudiantProfileComponent },
+  { path: 'suivibus', component: SuiviBusComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
 @NgModule({

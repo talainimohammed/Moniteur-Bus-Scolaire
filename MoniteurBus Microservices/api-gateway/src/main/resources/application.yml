@@ -38,6 +38,10 @@ spring:
           uri: lb://ETUDIANT
           predicates:
               - Path=/api/v1/etudiant/**
+        - id: realtime
+          uri: lb://REALTIME
+          predicates:
+            - Path=/api/v1/realtimeloc/**
 
 
 
