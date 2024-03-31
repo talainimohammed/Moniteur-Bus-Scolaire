@@ -20,6 +20,8 @@ import { BusProfileComponent } from './component/bus/bus-profile/bus-profile.com
 import { SearchBusPipe } from "./pipe/search-bus.pipe";
 import { SuiviBusComponent } from './component/suivi-bus/suivi-bus.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { EtudiantLocalisationComponent } from './component/etudiant-localisation/etudiant-localisation.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +36,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
         UtilisateurComponent,
         EtudiantComponent,
         EtudiantProfileComponent,
-        SuiviBusComponent
+        EtudiantLocalisationComponent,
+        SuiviBusComponent,
+        DashboardComponent
     ],
     providers: [
         DatePipe,

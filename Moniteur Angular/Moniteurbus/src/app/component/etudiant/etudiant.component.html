@@ -27,6 +27,7 @@
             <th>Prenom</th>
             <th>Niveau</th>
             <th>Tel</th>
+            <th>Suivi</th>
             <th>Details</th>
             <th>Delete</th>
           </tr>
@@ -37,6 +38,7 @@
             <td>{{etudiant.prenom}}</td>
             <td>{{etudiant.niveau}}</td>
             <td>{{etudiant.tel}}</td>
+            <td><a [routerLink]="['/etudloc',etudiant.etudiantId]"><i class="fa fa-map fs-5 text-primary"></i></a></td>
             <td><a [routerLink]="['/eleve',etudiant.etudiantId]"><i class="fa fa-eye fs-5 text-primary"></i></a></td>
             <td><a (click)="deleteEtudiant(etudiant.etudiantId)"><i  class="fa fa-trash fs-5 text-primary"></i></a></td>
           </tr>
@@ -47,6 +49,7 @@
             <td><strong>Prenom</strong></td>
             <td><strong>Niveau</strong></td>
             <td><strong>Tel</strong></td>
+            <td><strong>Suivi</strong></td>
             <td><strong>Details</strong></td>
             <td><strong>Delete</strong></td>
           </tr>

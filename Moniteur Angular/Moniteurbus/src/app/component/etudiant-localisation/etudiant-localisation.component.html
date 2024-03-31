@@ -4,12 +4,13 @@
   [center]="center"
   [zoom]="zoom"
   (mapClick)="addMarker($event)">
- <!--<map-marker *ngIf="check" [position]="markerPosition" [options]="markerOptions" />
-    @for (position of markerPositions; track position) {
-      <map-marker [position]="position" [options]="markerOptions" />
-    }-->
+ <!--<map-marker *ngIf="check" [position]="markerPosition" [options]="markerOptions" />-->
+   <!-- @for (position of markerPositions; track position) {
+      <map-marker [position]="position" [options]="markerOptions[1]" />
+    }
     <ng-container *ngFor="let position of markerPositions; let i = index">
       <map-marker [position]="position" [options]="markerOptions[i]" />
-    </ng-container>
+    </ng-container>-->
+    <map-directions-renderer></map-directions-renderer>
 </google-map>
 <button (click)="sendloc()">send new location</button>

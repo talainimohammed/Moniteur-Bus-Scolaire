@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
-import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
-import { Observable } from 'rxjs';
-import { interval } from 'rxjs';
-import { delay, takeWhile } from 'rxjs/operators';
-import { SuiviBusService } from '../../services/suivi-bus.service';
-import { SuiviBus } from '../../models/suivi-bus';
-import { EtudiantService } from '../../services/etudiant.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Etudiant } from '../../models/etudiant';
+import { SuiviBus } from '../../models/suivi-bus';
+import { SuiviBusService } from '../../services/suivi-bus.service';
+import { EtudiantService } from '../../services/etudiant.service';
+import { delay } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from '../../services/firebase.service';
+import { GoogleMap } from '@angular/google-maps';
+import { ActivatedRoute } from '@angular/router';
 @Component({
-  selector: 'app-suivi-bus',
-  templateUrl: './suivi-bus.component.html',
-  styleUrl: './suivi-bus.component.css'
+  selector: 'app-etudiant-localisation',
+  templateUrl: './etudiant-localisation.component.html',
+  styleUrl: './etudiant-localisation.component.css'
 })
-export class SuiviBusComponent implements OnInit{
+export class EtudiantLocalisationComponent implements OnInit{
+
   etudiant:Etudiant=new Etudiant();
-    center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
-    currentpos:SuiviBus=new SuiviBus();
-    destinationpos:google.maps.LatLngLiteral = {lat: 0, lng: 0};
-    //  destinationpos:google.maps.LatLngLiteral = {lat: 33.69088747096958, lng: -7.372760713061517};
-    zoom = 15;
+  idetudiant=0;
+  center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
+  currentpos:SuiviBus=new SuiviBus();
+  destinationpos:google.maps.LatLngLiteral = {lat: 0, lng: 0};
+  //  destinationpos:google.maps.LatLngLiteral = {lat: 33.69088747096958, lng: -7.372760713061517};
+  zoom = 15;
     options: google.maps.MapOptions = {
       zoomControl: true,
       scrollwheel: false,
@@ -37,21 +38,34 @@ export class SuiviBusComponent implements OnInit{
     check=false;
     markerPosition: google.maps.LatLngLiteral ={lat: 0, lng: 0};
   
-    constructor(private suiviBus:FirebaseService,private etudiantService:EtudiantService){}
+    constructor(private suiviBus:FirebaseService,private etudiantService:EtudiantService,private http: HttpClient,private route:ActivatedRoute){}
   
+    origin = { lat: 33.70038747096962, lng: -7.370860713061521 };
+    destination = { lat: 25, lng: 13 };
+    @ViewChild(GoogleMap, { static: false }) map?: GoogleMap;
+    ngAfterViewInit() {
+         
+    }
     ngOnInit() {
+      if(this.route.snapshot.params['id']){
+        this.idetudiant=this.route.snapshot.params['id'];
+      }
       navigator.geolocation.getCurrentPosition((position) => {
         this.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
       });
+      this.currentpos.idbus=3;    
+      this.currentpos.latitude=this.center.lat;
+      this.currentpos.longtitude=this.center.lng;
+      this.saveRealTimeLoc(this.currentpos);
      // this.sendtofirebase();
       /*setInterval(() => {
       this.sendloc();
     }, 5000);*/
       this.check=true;
-      this.retrieveEtudiant(5);
+      this.retrieveEtudiant(this.idetudiant);
       this.getRealTimeLoc(3);
     }
     circleCenter: google.maps.LatLngLiteral = {lat: 33.667782574792184, lng: -7.397301689965827};
@@ -61,6 +75,8 @@ export class SuiviBusComponent implements OnInit{
     addMarker(event: google.maps.MapMouseEvent) {
       if (event.latLng) {
         let markerPosition: google.maps.LatLngLiteral = event.latLng.toJSON();
+        console.log(markerPosition);
+        
         this.markerPositions.push(markerPosition);
       }
     }
@@ -79,7 +95,10 @@ export class SuiviBusComponent implements OnInit{
           }
     }
     sendloc() {
-      this.saveRealTimeLoc();
+      this.currentpos.idbus=3;    
+      this.currentpos.latitude=this.markerPositions[1].lat+0.0005;
+      this.currentpos.longtitude=this.markerPositions[1].lng+0.0001;
+      this.saveRealTimeLoc(this.currentpos);
       /*let loc = {lat: 33.667782574792184, lng: -7.397301689965827};
         this.markerPositions.push(loc);
         console.log(loc);*/
@@ -102,15 +121,53 @@ export class SuiviBusComponent implements OnInit{
           this.markerPositions.push({lat: d.latitude, lng: d.longtitude});
         });*/
         this.markerPositions.push(this.destinationpos);  
+        this.origin=this.markerPositions[1];
+        this.destination=this.markerPositions[2];
         this.perimeternotif(this.markerPositions[1],this.destinationpos);
-      });
+        /**************trajet****************** */
+        console.log(this.origin);
+        console.log(this.destination);
+        //this.map?.googleMap?.addListener('tilesloaded', () => {
+          const directionsService = new google.maps.DirectionsService();
+          const directionsRenderer = new google.maps.DirectionsRenderer();
+          directionsRenderer.setMap(this.map?.googleMap ?? null);  
+    
+          const request: google.maps.DirectionsRequest = {
+            origin: this.origin,
+            destination: this.destination,
+            travelMode: google.maps.TravelMode.DRIVING
+          };
+    
+          directionsService.route(request, (result, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+              directionsRenderer.setDirections(result);
+              new google.maps.Marker({
+                position: this.origin,
+                map: this.map?.googleMap,
+                label: 'Bus',
+                title: 'Origin',
+                icon:'/assets/img/avatars/location.png'
+              });
+      
+              new google.maps.Marker({
+                position: this.destination,
+                map: this.map?.googleMap,
+                label: 'B',
+                title: 'Destination',
+                icon:'/assets/img/avatars/end.png'
+              });
+            }
+          });
+        }); 
+        
+      //});
     }
-    saveRealTimeLoc(){
-      this.currentpos.idbus=3;    
+    saveRealTimeLoc(currentpos:any){
+      /*this.currentpos.idbus=3;    
       this.currentpos.latitude=this.markerPositions[1].lat+0.0005;
-      this.currentpos.longtitude=this.markerPositions[1].lng+0.0001;
+      this.currentpos.longtitude=this.markerPositions[1].lng+0.0001;*/
       let groupedData = {
-        [this.currentpos.idbus]: {
+        [currentpos.idbus]: {
           idbus: this.currentpos.idbus,
           latitude: this.currentpos.latitude,
           longtitude: this.currentpos.longtitude
