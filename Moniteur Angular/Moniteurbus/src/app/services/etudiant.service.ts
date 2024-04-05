@@ -10,7 +10,7 @@ import { environment } from '../environments/env';
 export class EtudiantService {
 
   private apiurl = environment.urlapi + "/etudiant";
-  private token="eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQ0hBVUZGRVVSIiwiaWQiOjEsInN1YiI6InF3ZXJ0eTEiLCJpYXQiOjE3MTIyMzQ2MDgsImV4cCI6MTcxMjIzNjQwOH0._qcQTI2iUN6rou9pl0XiJYI4Q06qflqv8lBA9WR6vZY";
+  private token=environment.tokenstring;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${this.token}`

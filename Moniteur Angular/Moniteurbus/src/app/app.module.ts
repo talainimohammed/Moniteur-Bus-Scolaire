@@ -23,6 +23,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { EtudiantLocalisationComponent } from './component/etudiant-localisation/etudiant-localisation.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { MobileInterfaceComponent } from './component/mobile-interface/mobile-interface.component';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import { MobileInterfaceComponent } from './component/mobile-interface/mobile-in
         EtudiantLocalisationComponent,
         SuiviBusComponent,
         MobileInterfaceComponent,
+        LoginComponent,
         DashboardComponent
     ],
     providers: [

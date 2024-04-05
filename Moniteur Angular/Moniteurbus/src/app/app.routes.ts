@@ -11,6 +11,8 @@ import { BusProfileComponent } from './component/bus/bus-profile/bus-profile.com
 import { SuiviBusComponent } from './component/suivi-bus/suivi-bus.component';
 import { EtudiantLocalisationComponent } from './component/etudiant-localisation/etudiant-localisation.component';
 import { MobileInterfaceComponent } from './component/mobile-interface/mobile-interface.component';
+import { LoginComponent } from './component/login/login.component';
+import { UtilisateurComponent } from './component/utilisateur/utilisateur.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,6 +33,8 @@ export const routes: Routes = [
   { path: 'etudloc', component: EtudiantLocalisationComponent },
   { path: 'etudloc/:id', component: EtudiantLocalisationComponent },
   { path: 'mobile', component: MobileInterfaceComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'utilisateurs', component: UtilisateurComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
 @NgModule({

@@ -9,7 +9,7 @@ import { SuiviBus } from '../models/suivi-bus';
 export class SuiviBusService {
 
   private apiurl=environment.urlapi+"/realtimeloc";
-  private token="eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQ0hBVUZGRVVSIiwiaWQiOjEsInN1YiI6InF3ZXJ0eTEiLCJpYXQiOjE3MTIyMzEyNjgsImV4cCI6MTcxMjIzMzA2OH0.YPAveaUB8KrAi2kQYycjx4Kc1wd03vswAoDeLtgJSVU";
+  private token=environment.tokenstring;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${this.token}`

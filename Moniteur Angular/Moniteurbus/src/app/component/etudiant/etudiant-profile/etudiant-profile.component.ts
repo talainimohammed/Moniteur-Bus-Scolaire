@@ -16,6 +16,7 @@ export class EtudiantProfileComponent implements OnInit{
 
   etudiant:Etudiant=new Etudiant();
   bus?: Bus[];
+  onebus?: Bus=new Bus();
   chauffeur: Chauffeur=new Chauffeur();
   id:number=0;
   submitted=false;
@@ -47,15 +48,23 @@ export class EtudiantProfileComponent implements OnInit{
     );
   }
   getChauffeur(id: number): void {
-    this.chauffeurService.getChauffeur(id)
-      .subscribe(
-        data => {
-          this.chauffeur = data;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
+    this.busService.getBusById(id).subscribe(
+      data=>{
+        this.onebus=data as Bus;
+        this.chauffeurService.getChauffeur(this.onebus.idchauffeur).subscribe(
+          data1 => {
+            this.chauffeur = data1;
+            console.log(data1);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
   retrieveEtudiant(id:any){
     this.etudiantservice.getEtudiant(id).subscribe(
