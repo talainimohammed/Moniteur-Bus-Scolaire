@@ -30,9 +30,10 @@ export class DashboardComponent {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
+      this.markerPositions.push(this.center);
+      console.log(this.markerPositions);
     });
-    this.markerPositions.push(this.center);
-    console.log(this.markerPositions);
+  
     
   }
 }

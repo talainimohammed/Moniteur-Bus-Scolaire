@@ -28,6 +28,7 @@ public class Utilisateur {
     private LocalDate dateNaissance;
     private String tel;
     private String email;
+    private String password;
     private RoleEnum roleEnum;
     @Column(name = "isDeleted")
     private boolean deleted;

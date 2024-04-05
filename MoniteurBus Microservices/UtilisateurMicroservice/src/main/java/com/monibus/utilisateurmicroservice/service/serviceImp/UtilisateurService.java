@@ -7,22 +7,28 @@ import com.monibus.utilisateurmicroservice.repository.UtilisateurRepository;
 import com.monibus.utilisateurmicroservice.service.IUtilisateur;
 import jakarta.ws.rs.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 public class UtilisateurService implements IUtilisateur {
 
     private UtilisateurRepository utilisateurRepository;
     private ModelMapper modelMapper;
-    public UtilisateurService(UtilisateurRepository utilisateurRepository,ModelMapper modelMapper){
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtService jwtService){
         this.utilisateurRepository=utilisateurRepository;
         this.modelMapper=modelMapper;
-
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
     @Override
     public UtilisateurDTO addUtilisateur(UtilisateurDTO utilisateurDTO) {
         if(utilisateurDTO == null) throw new NullPointerException("Utilisateur ne peut pas etre null");
+        utilisateurDTO.setPassword(this.passwordEncoder.encode(utilisateurDTO.getPassword()));
         return modelMapper.map(this.utilisateurRepository.save(modelMapper.map(utilisateurDTO, Utilisateur.class)),UtilisateurDTO.class);
     }
 
@@ -62,5 +68,16 @@ public class UtilisateurService implements IUtilisateur {
         if (utilisateur==null)throw new NotFoundException("Utilisateur non trouvé");
         utilisateur.setDeleted(true);
         return this.utilisateurRepository.save(utilisateur).isDeleted();
+    }
+    @Override
+    public String generateToken(Long id, String email, String role) {
+        return jwtService.generateToken(id,email, role);
+
+    }
+
+    @Override
+    public void validateToken(String token)
+    {
+        jwtService.validateToken(token);
     }
 }

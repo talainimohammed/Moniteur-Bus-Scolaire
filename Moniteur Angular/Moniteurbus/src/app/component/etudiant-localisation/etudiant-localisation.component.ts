@@ -55,11 +55,11 @@ export class EtudiantLocalisationComponent implements OnInit{
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
+        this.currentpos.idbus=3;    
+        this.currentpos.latitude=this.center.lat;
+        this.currentpos.longtitude=this.center.lng;
+        this.saveRealTimeLoc(this.currentpos);
       });
-      this.currentpos.idbus=3;    
-      this.currentpos.latitude=this.center.lat;
-      this.currentpos.longtitude=this.center.lng;
-      this.saveRealTimeLoc(this.currentpos);
      // this.sendtofirebase();
       /*setInterval(() => {
       this.sendloc();

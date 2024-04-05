@@ -83,7 +83,7 @@ export class EtudiantProfileComponent implements OnInit{
       locationId:0,
       latitude:this.etudiant.latitude,
       longtitude:this.etudiant.longtitude,
-      ecoleId:this.etudiant.ecoleId
+      ecoleId:1
     };
     console.log(data);
     

@@ -10,11 +10,13 @@ import { ChauffeurProfileComponent } from './component/chauffeur/chauffeur-profi
 import { BusProfileComponent } from './component/bus/bus-profile/bus-profile.component';
 import { SuiviBusComponent } from './component/suivi-bus/suivi-bus.component';
 import { EtudiantLocalisationComponent } from './component/etudiant-localisation/etudiant-localisation.component';
+import { MobileInterfaceComponent } from './component/mobile-interface/mobile-interface.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: DashboardComponent },
   { path: 'ecole', component: EcoleComponent },
+  { path: 'ecole/:id', component: EcoleComponent },
   { path: 'eleves', component: EtudiantComponent },
   { path: 'bus', component: BusComponent },
   { path: 'busprofile', component: BusProfileComponent },
@@ -22,11 +24,13 @@ export const routes: Routes = [
   { path: 'chauffeurs', component: ChauffeurComponent },
   { path: 'chauffeur', component: ChauffeurProfileComponent },
   { path: 'chauffeur/:id', component: ChauffeurProfileComponent },
+  { path: 'chauffeur/:id', component: ChauffeurProfileComponent },
   { path: 'eleve', component: EtudiantProfileComponent },
   { path: 'eleve/:id', component: EtudiantProfileComponent },
-  { path: 'suivibus', component: SuiviBusComponent },
+  { path: 'suivibus/:id', component: SuiviBusComponent },
   { path: 'etudloc', component: EtudiantLocalisationComponent },
   { path: 'etudloc/:id', component: EtudiantLocalisationComponent },
+  { path: 'mobile', component: MobileInterfaceComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
 @NgModule({

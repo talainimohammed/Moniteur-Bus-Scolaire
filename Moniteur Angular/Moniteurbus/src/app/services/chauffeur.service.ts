@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/env';
 import { Role } from '../enum/role';
@@ -10,22 +10,27 @@ export class ChauffeurService {
 
 
   private apiurl=environment.urlapi+"/utilisateur";
-
+  private token="eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQ0hBVUZGRVVSIiwiaWQiOjMsInN1YiI6InF3ZXJ0eTIiLCJpYXQiOjE3MTIyMzk4NTYsImV4cCI6MTcxMjI0MTY1Nn0.HlOHPDDRdXV1T-HcithDG9VprZikdPYuxm-vhCfkIyE";
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.token}`
+  });
+  private requestOptions = { headers: this.headers };
   constructor(private httpclient:HttpClient) { }
 
   getChauffeurs(){
-    return this.httpclient.get(this.apiurl+"/role/"+Role.CHAUFFEUR);
+    return this.httpclient.get(this.apiurl+"/role/"+Role.CHAUFFEUR,this.requestOptions);
   }
   createChauffeur(data:any){
-    return this.httpclient.post(this.apiurl,data);
+    return this.httpclient.post(this.apiurl,data,this.requestOptions);
   }
   getChauffeur(id:any){
-    return this.httpclient.get(this.apiurl+"/"+id);
+    return this.httpclient.get(this.apiurl+"/"+id,this.requestOptions);
   }
   updateChauffeur(id:any,data:any){
-    return this.httpclient.put(this.apiurl+"/"+id,data);
+    return this.httpclient.put(this.apiurl+"/"+id,data,this.requestOptions);
   }
   deleteChauffeur(id:any){
-    return this.httpclient.delete(this.apiurl+"/"+id);
+    return this.httpclient.delete(this.apiurl+"/"+id,this.requestOptions);
   }
 }

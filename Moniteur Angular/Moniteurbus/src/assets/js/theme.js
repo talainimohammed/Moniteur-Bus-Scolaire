@@ -5,7 +5,6 @@
   var sidebarToggles = document.querySelectorAll('#sidebarToggle, #sidebarToggleTop');
   
   if (sidebar) {
-    
     var collapseEl = sidebar.querySelector('.collapse');
     var collapseElementList = [].slice.call(document.querySelectorAll('.sidebar .collapse'))
     var sidebarCollapseList = collapseElementList.map(function (collapseEl) {
@@ -16,6 +15,7 @@
 
       // Toggle the side navigation
       toggle.addEventListener('click', function(e) {
+        console.log('clicked');
         document.body.classList.toggle('sidebar-toggled');
         sidebar.classList.toggle('toggled');
 

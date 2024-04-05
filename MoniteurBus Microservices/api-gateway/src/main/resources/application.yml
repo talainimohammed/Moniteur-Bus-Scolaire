@@ -18,31 +18,44 @@ spring:
           uri: lb://ECOLE
           predicates:
               - Path=/api/v1/ecole/**
+          filters:
+            - AuthenticationFilter
         - id: bus
           uri: lb://BUS
           predicates:
               - Path=/api/v1/bus/**
+          filters:
+            - AuthenticationFilter
         - id: utilisateur
           uri: lb://UTILISATEUR
           predicates:
-              - Path=/api/v1/utilisateur/**
+            - Path=/api/v1/utilisateur/**
+          filters:
+            - AuthenticationFilter
         - id: Notification
           uri: lb://NOTIFICATION
           predicates:
               - Path=/api/v1/notification/**
+          filters:
+            - AuthenticationFilter
         - id: location
           uri: lb://LOCATION
           predicates:
               - Path=/api/location/**
+          filters:
+            - AuthenticationFilter
         - id: etudiant
           uri: lb://ETUDIANT
           predicates:
               - Path=/api/v1/etudiant/**
+          filters:
+            - AuthenticationFilter
         - id: realtime
           uri: lb://REALTIME
           predicates:
             - Path=/api/v1/realtimeloc/**
-
+          filters:
+            - AuthenticationFilter
 
 
 server:
@@ -52,5 +65,4 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-    fetch-registry: true
     register-with-eureka: true

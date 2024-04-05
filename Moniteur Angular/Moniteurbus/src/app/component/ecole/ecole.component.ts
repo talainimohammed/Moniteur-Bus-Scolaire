@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EcoleService} from "../../services/ecole.service";
 import {Ecole} from "../../models/ecole";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ecole',
@@ -17,13 +18,28 @@ export class EcoleComponent implements OnInit{
     latitude: 0,
     longtitude: 0
 };
+  ecoleId:number=0;
   ecoles?:Ecole[];
   submitted = false;
-  constructor(private ecoleService: EcoleService){}
+  constructor(private ecoleService: EcoleService,private route:ActivatedRoute){}
     ngOnInit(): void {
-      //this.retrieveEcoles();
+      if(this.route.snapshot.params['id']){
+        this.ecoleId=this.route.snapshot.params['id'];
+        this.retrieveEcole(this.ecoleId);
+      }
     }
 
+    retrieveEcole(id:number): void {
+      this.ecoleService.getEcole(id)
+        .subscribe(
+          data => {
+            this.ecole = data;
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          });
+      }
   retrieveEcoles(): void {
     this.ecoleService.getEcoles()
       .subscribe(

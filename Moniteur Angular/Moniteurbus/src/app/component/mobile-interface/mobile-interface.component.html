@@ -1,0 +1,30 @@
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-lg-1">
+            <h3 class="text-dark mb-4">Moniteur Bus Scolaire</h3>
+            <img src="/assets/img/avatars/avatar1.jpeg" style="width: 100%; height: 100%; margin-left: 0%; padding: 0px;">
+        </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-lg-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="text-primary fw-bold m-0">Parent App</h6>
+          </div>
+          <div class="card-body">
+            <div class="row mb-2">
+                <a [routerLink]="['/suivibus',etudiant.etudiantId]" class="btn btn-primary btn-sm d-block w-100">Suivie Bus</a>
+            </div>
+            <div class="row mb-2">
+                <a [routerLink]="['/ecole',etudiant.ecoleId]" class="btn btn-primary btn-sm d-block w-100" type="button">Informations D'ecole</a>
+            </div>
+            <div class="row mb-2">
+                <a [routerLink]="['/chauffeur',etudiant.busId]" class="btn btn-primary btn-sm d-block w-100" type="button">Information Chauffeur</a>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

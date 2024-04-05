@@ -32,6 +32,10 @@ public class UtilisateurDTO {
     @NotEmpty(message = "email utilisateur empty")
     @NotNull(message = "email utilisateur null")
     private String email;
+    @NotBlank(message = "password utilisateur est vide")
+    @NotEmpty(message = "password utilisateur empty")
+    @NotNull(message = "password utilisateur null")
+    private String password;
     private RoleEnum roleEnum;
     private boolean isDeleted;
 

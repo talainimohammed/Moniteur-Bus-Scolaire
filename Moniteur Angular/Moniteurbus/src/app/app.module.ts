@@ -22,6 +22,7 @@ import { SuiviBusComponent } from './component/suivi-bus/suivi-bus.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { EtudiantLocalisationComponent } from './component/etudiant-localisation/etudiant-localisation.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { MobileInterfaceComponent } from './component/mobile-interface/mobile-interface.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
         EtudiantProfileComponent,
         EtudiantLocalisationComponent,
         SuiviBusComponent,
+        MobileInterfaceComponent,
         DashboardComponent
     ],
     providers: [

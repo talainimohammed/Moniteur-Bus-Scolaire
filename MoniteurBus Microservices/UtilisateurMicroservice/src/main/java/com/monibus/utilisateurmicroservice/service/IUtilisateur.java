@@ -13,4 +13,6 @@ public interface IUtilisateur {
     public UtilisateurDTO afficherUtilisateurById(long id);
     public List<UtilisateurDTO> afficherUtilisateurByRole(int roleEnum);
     public boolean delUtilisateur(long id);
+    String generateToken(Long id, String username, String email);
+    void validateToken(String token);
 }
