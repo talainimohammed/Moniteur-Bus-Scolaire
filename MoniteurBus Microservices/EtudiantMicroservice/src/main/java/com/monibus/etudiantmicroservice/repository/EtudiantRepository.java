@@ -10,5 +10,6 @@ import java.util.List;
 public interface EtudiantRepository extends JpaRepository<Etudiant,Long> {
 
     List<Etudiant> findByDeletedFalse();
+    List<Etudiant> findByEcoleIdAndDeletedFalse(long idEcole);
 
 }

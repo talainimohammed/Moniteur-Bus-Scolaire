@@ -55,7 +55,7 @@ class UtilisateurContollerTest {
 
     @Test
     void tousUtilisateursparRole() throws Exception {
-        when(iUtilisateur.afficherUtilisateurByRole(1)).thenReturn(List.of(utilisateurDTO));
+        when(iUtilisateur.afficherUtilisateurByRole(1,1L)).thenReturn(List.of(utilisateurDTO));
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/utilisateur/role/1"))
                 .andDo(print())
                 .andExpect(status().isOk())

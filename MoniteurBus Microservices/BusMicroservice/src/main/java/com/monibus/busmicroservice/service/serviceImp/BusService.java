@@ -59,8 +59,8 @@ public class BusService implements IBus {
     }
 
     @Override
-    public List<BusDTO> afficherBuses() {
-        List<Bus> buses=busRepository.findByDeletedFalse();
+    public List<BusDTO> afficherBuses(long idEcole) {
+        List<Bus> buses=busRepository.findAllByIdecoleAndDeletedFalse(idEcole);
         List<BusDTO> busDTOS=buses.stream().map(b->modelMapper.map(b,BusDTO.class)).toList();
         return busDTOS;
     }

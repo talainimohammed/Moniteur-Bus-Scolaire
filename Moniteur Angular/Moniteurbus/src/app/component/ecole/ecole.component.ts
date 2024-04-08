@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EcoleService} from "../../services/ecole.service";
 import {Ecole} from "../../models/ecole";
 import { ActivatedRoute } from '@angular/router';
+import { Userdata } from '../../models/userdata';
 
 @Component({
   selector: 'app-ecole',
@@ -21,8 +22,10 @@ export class EcoleComponent implements OnInit{
   ecoleId:number=0;
   ecoles?:Ecole[];
   submitted = false;
+  userData:Userdata=new Userdata();
   constructor(private ecoleService: EcoleService,private route:ActivatedRoute){}
     ngOnInit(): void {
+      
       if(this.route.snapshot.params['id']){
         this.ecoleId=this.route.snapshot.params['id'];
         this.retrieveEcole(this.ecoleId);

@@ -53,6 +53,7 @@ public class EtudiantService implements IEtudiant {
             utilisateurDTO.setTel(etudiantDTO1.getTel());
             utilisateurDTO.setDateNaissance(etudiantDTO1.getDateNaissance());
             utilisateurDTO.setPassword(etudiantDTO.getPassword());
+            utilisateurDTO.setIdEcole(etudiantDTO1.getEcoleId());
             utilisateurClient.saveUtilisateur(utilisateurDTO);
         }
         etudiantDTO1.setLatitude(locationDTO.getLatitude());
@@ -115,6 +116,12 @@ public class EtudiantService implements IEtudiant {
         etudiantDTO.setLatitude(locationDTO.getLatitude());
         etudiantDTO.setLongtitude(locationDTO.getLongtitude());
         return etudiantDTO;
+    }
+
+    @Override
+    public List<EtudiantDTO> afficherEtudiantsByEcoleId(long idEcole) {
+        List<EtudiantDTO> etudiants=this.etudiantRepository.findByEcoleIdAndDeletedFalse(idEcole).stream().map(e->modelMapper.map(e,EtudiantDTO.class)).toList();
+        return etudiants ;
     }
 
     @Override

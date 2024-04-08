@@ -28,11 +28,17 @@ public class UtilisateurContoller {
         List<UtilisateurDTO> utilisateurDTOS=this.iUtilisateur.afficherUtilisateurs();
         return new ResponseEntity<>(utilisateurDTOS, HttpStatus.OK);
     }
-    @GetMapping("/role/{role}")
-    public ResponseEntity<List<UtilisateurDTO>> tousUtilisateursparRole(@PathVariable(value = "role") int role){
-        List<UtilisateurDTO> utilisateurDTOS=this.iUtilisateur.afficherUtilisateurByRole(role);
+    @GetMapping("/role/{role}/ecole/{id}")
+    public ResponseEntity<List<UtilisateurDTO>> tousUtilisateursparRole(@PathVariable(value = "role") int role,@PathVariable(value = "id") long id){
+        List<UtilisateurDTO> utilisateurDTOS=this.iUtilisateur.afficherUtilisateurByRole(role,id);
         return new ResponseEntity<>(utilisateurDTOS, HttpStatus.OK);
     }
+
+   /* @GetMapping("/ecole/{id}")
+    public ResponseEntity<List<UtilisateurDTO>> tousUtilisateursparEcole(@PathVariable(value = "id") long id){
+        List<UtilisateurDTO> utilisateurDTOS=this.iUtilisateur.afficherUtilisateursByEcoleId(id);
+        return new ResponseEntity<>(utilisateurDTOS, HttpStatus.OK);
+    }*/
     @GetMapping("/{id}")
     public ResponseEntity<UtilisateurDTO> getUtilisateur(@PathVariable(value = "id") long id){
         UtilisateurDTO utilisateurDTO=this.iUtilisateur.afficherUtilisateurById(id);

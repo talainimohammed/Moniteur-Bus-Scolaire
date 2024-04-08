@@ -15,6 +15,7 @@ public class UtilisateurDTO {
     private String tel;
     private String email;
     private String password;
+    private long idEcole;
     private RoleEnum roleEnum;
     private boolean isDeleted;
 

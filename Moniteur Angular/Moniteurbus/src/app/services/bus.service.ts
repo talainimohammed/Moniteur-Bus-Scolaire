@@ -14,8 +14,8 @@ export class BusService {
     'Content-Type': 'application/json',
   });
   private requestOptions = { headers: this.headers };
-  getBus(){
-    return this.httpclient.get(this.apiurl, this.requestOptions);
+  getBus(id:number){
+    return this.httpclient.get(this.apiurl+"/ecole/"+id, this.requestOptions);
   }
   getBusById(id:any){
     return this.httpclient.get(this.apiurl+"/"+id, this.requestOptions);

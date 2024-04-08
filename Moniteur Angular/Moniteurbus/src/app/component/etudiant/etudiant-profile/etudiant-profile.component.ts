@@ -8,6 +8,7 @@ import { ChauffeurService } from '../../../services/chauffeur.service';
 import { Chauffeur } from '../../../models/chauffeur';
 import { Utilisateur } from '../../../models/utilisateur';
 import { UtilisateurService } from '../../../services/utilisateur.service';
+import { Userdata } from '../../../models/userdata';
 
 @Component({
   selector: 'app-etudiant-profile',
@@ -23,9 +24,13 @@ export class EtudiantProfileComponent implements OnInit{
   utilisateur: Utilisateur=new Utilisateur();
   id:number=0;
   submitted=false;
+  userData:Userdata=new Userdata();
+  id_ecole:number=0;
   constructor(private etudiantservice:EtudiantService,private utilisateurService:UtilisateurService,private busService:BusService,private chauffeurService:ChauffeurService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userData= JSON.parse(localStorage.getItem('userData') as string);
+    this.id_ecole = this.userData.idecole ?? 0;
     if(this.route.snapshot.params['id']!=null){
       this.id= this.route.snapshot.params['id'];
     }
@@ -40,7 +45,7 @@ export class EtudiantProfileComponent implements OnInit{
     }
   }
   getBus(){
-    this.busService.getBus().subscribe(
+    this.busService.getBus(this.id_ecole).subscribe(
       data=>{
         this.bus = data as Bus[];
         console.log(data);
@@ -96,7 +101,7 @@ export class EtudiantProfileComponent implements OnInit{
       locationId:0,
       latitude:this.etudiant.latitude,
       longtitude:this.etudiant.longtitude,
-      ecoleId:1
+      ecoleId:this.id_ecole
     };
     console.log(data);
     this.etudiantservice.createEtudiant(data).subscribe(
@@ -121,7 +126,7 @@ export class EtudiantProfileComponent implements OnInit{
       locationId:this.etudiant.locationId,
       latitude:this.etudiant.latitude,
       longtitude:this.etudiant.longtitude,
-      ecoleId:this.etudiant.ecoleId
+      ecoleId:this.id_ecole
     };
     this.etudiantservice.updateEtudiant(id,data).subscribe(
       response=>{

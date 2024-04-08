@@ -30,6 +30,7 @@ class UtilisateurServiceTest {
         utilisateurDTO.setAdresse("adresse");
         utilisateurDTO.setTel("telephone");
         utilisateurDTO.setDateNaissance(LocalDate.parse("2022-02-02"));
+        utilisateurDTO.setIdEcole(1L);
     }
 
     @Test
@@ -73,7 +74,7 @@ class UtilisateurServiceTest {
     @Test
     void afficherUtilisateurByRole() {
         UtilisateurDTO utilisateur = iUtilisateur.addUtilisateur(utilisateurDTO);
-        assertNotNull(iUtilisateur.afficherUtilisateurByRole(RoleEnum.CHAUFFEUR.ordinal()));
+        assertNotNull(iUtilisateur.afficherUtilisateurByRole(RoleEnum.CHAUFFEUR.ordinal(), 1L));
     }
 
     @Test

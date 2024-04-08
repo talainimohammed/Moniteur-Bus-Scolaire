@@ -17,8 +17,8 @@ export class EtudiantService {
   private requestOptions = { headers: this.headers };
   constructor(private httpclient: HttpClient) { }
 
-  getEtudiants(): Observable<Etudiant[]> {
-    return this.httpclient.get<Etudiant[]>(this.apiurl,this.requestOptions);
+  getEtudiants(id:number): Observable<Etudiant[]> {
+    return this.httpclient.get<Etudiant[]>(this.apiurl+ "/ecole/" + id,this.requestOptions);
   }
   createEtudiant(data: any) {
     return this.httpclient.post(this.apiurl, data,this.requestOptions);

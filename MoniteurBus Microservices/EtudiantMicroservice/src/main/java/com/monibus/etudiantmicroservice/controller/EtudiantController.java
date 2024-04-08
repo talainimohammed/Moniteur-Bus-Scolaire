@@ -27,6 +27,12 @@ public class EtudiantController {
         List<EtudiantDTO> etudiantDTOS=this.iEtudiant.afficherEtudiants();
         return new ResponseEntity<>(etudiantDTOS, HttpStatus.OK);
     }
+    @GetMapping("/ecole/{idEcole}")
+    public ResponseEntity<List<EtudiantDTO>> tousEtudiantsByEcole(@PathVariable(value = "idEcole") long idEcole){
+        List<EtudiantDTO> etudiantDTOS=this.iEtudiant.afficherEtudiantsByEcoleId(idEcole);
+        return new ResponseEntity<>(etudiantDTOS, HttpStatus.OK);
+    }
+
 
     @GetMapping("{id}")
     public ResponseEntity<EtudiantDTO> getEtudiant(@PathVariable(value = "id") long id){

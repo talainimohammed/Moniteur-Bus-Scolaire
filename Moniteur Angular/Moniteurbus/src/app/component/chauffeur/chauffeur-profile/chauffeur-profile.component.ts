@@ -5,6 +5,7 @@ import { Role } from '../../../enum/role';
 import { ActivatedRoute } from '@angular/router';
 import { Bus } from '../../../models/bus';
 import { BusService } from '../../../services/bus.service';
+import { Userdata } from '../../../models/userdata';
 
 @Component({
   selector: 'app-chauffeur-profile',
@@ -15,6 +16,8 @@ export class ChauffeurProfileComponent implements OnInit{
 
   chauffeur: Chauffeur = new Chauffeur();
   chauffeur1: Chauffeur = new Chauffeur();
+  userData:Userdata=new Userdata();
+  id_ecole:number=0;
   bus?: Bus[];
   busupdate: Bus=new Bus();
   submitted = false;
@@ -22,6 +25,8 @@ export class ChauffeurProfileComponent implements OnInit{
   constructor( private chauffeurService:ChauffeurService,private busService:BusService,private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.getBus();
+    this.userData= JSON.parse(localStorage.getItem('userData') as string);
+    this.id_ecole = this.userData.idecole ?? 0;
     if(this.route.snapshot.params['id']!=null){
       this.id= this.route.snapshot.params['id'];
       this.getChauffeur(this.id);
@@ -31,7 +36,7 @@ export class ChauffeurProfileComponent implements OnInit{
     console.log(this.busupdate);
   }
   getBus(){
-      this.busService.getBus().subscribe(
+      this.busService.getBus(this.id_ecole).subscribe(
         data=>{
           this.bus = data as Bus[];
           console.log(data);
@@ -61,6 +66,8 @@ export class ChauffeurProfileComponent implements OnInit{
       dateNaissance: this.chauffeur.dateNaissance,
       tel: this.chauffeur.tel,
       email: this.chauffeur.email,
+      password:this.chauffeur.password,
+      idEcole:this.id_ecole,
       roleEnum: Role.CHAUFFEUR
     };
     this.chauffeurService.createChauffeur(data)

@@ -17,8 +17,8 @@ export class ChauffeurService {
   private requestOptions = { headers: this.headers };
   constructor(private httpclient:HttpClient) { }
 
-  getChauffeurs(){
-    return this.httpclient.get(this.apiurl+"/role/"+Role.CHAUFFEUR,this.requestOptions);
+  getChauffeurs(id:number){
+    return this.httpclient.get(this.apiurl+"/role/"+Role.CHAUFFEUR+"/ecole/"+id,this.requestOptions);
   }
   createChauffeur(data:any){
     return this.httpclient.post(this.apiurl,data,this.requestOptions);

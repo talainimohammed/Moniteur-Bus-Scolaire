@@ -36,6 +36,8 @@ public class AuthConfig {
                     auth.requestMatchers("/api/v1/utilisateur/auth/validate").permitAll();
                     auth.requestMatchers("/api/v1/utilisateur/**").permitAll();
                     auth.requestMatchers("/api/v1/utilisateur/role/**").permitAll();
+                    auth.requestMatchers("/api/v1/utilisateur/ecole/**").permitAll();
+
                 }).build();
     }
 

@@ -40,7 +40,8 @@ public class AuthController {
             Long idUser = userDetails.getId();
             String email = userDetails.getEmail();
             String role = userDetails.getRole();
-            map.put("token",userService.generateToken(idUser,email, role));
+            Long idEcole=userDetails.getIdEcole();
+            map.put("token",userService.generateToken(idUser,email, role,idEcole));
             return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
             throw new RuntimeException("invalid access !");

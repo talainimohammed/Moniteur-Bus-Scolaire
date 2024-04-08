@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { BusService } from '../../../services/bus.service';
 import { Bus } from '../../../models/bus';
 import { ActivatedRoute } from '@angular/router';
+import { Userdata } from '../../../models/userdata';
 
 @Component({
   selector: 'app-bus-profile',
@@ -13,10 +14,13 @@ export class BusProfileComponent implements OnInit{
   bus:Bus=new Bus();
   submitted=false;
   id:number=0;
-
+  userData:Userdata=new Userdata();
+  id_ecole=0;
   constructor(private busService:BusService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userData= JSON.parse(localStorage.getItem('userData') as string);
+    this.id_ecole = this.userData.idecole ?? 0;
     if(this.route.snapshot.params['id']){
       this.id = this.route.snapshot.params['id'];
       this.getBus(this.id);
@@ -28,7 +32,7 @@ export class BusProfileComponent implements OnInit{
     const data = {
       matricule: this.bus.matricule,
       nbplaces: this.bus.nbplaces,
-      idecole: 1
+      idecole: this.id_ecole
     };
     this.busService.addBus(data).subscribe(
       response=>{
@@ -45,7 +49,7 @@ export class BusProfileComponent implements OnInit{
       matricule: this.bus.matricule,
       nbplaces: this.bus.nbplaces,
       idchauffeur: this.bus.idchauffeur,
-      idecole: 1
+      idecole: this.id_ecole
     };
     this.busService.updateBus(id,data).subscribe(
       response=>{

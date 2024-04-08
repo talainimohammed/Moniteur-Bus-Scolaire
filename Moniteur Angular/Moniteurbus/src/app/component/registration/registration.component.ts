@@ -28,20 +28,22 @@ export class RegistrationComponent {
       longtitude: this.ecole.longtitude
     };
     console.log(dataecole);
-    const datauser = {
-      nom: this.utilisateur.nom,
-      prenom: this.utilisateur.prenom,
-      email: this.utilisateur.email,
-      password: this.utilisateur.password,
-      tel: "0000000000",
-      roleEnum: 3,    
-      adresse: "adresse",
-      dateNaissance: new Date(),
-    };
     this.ecoleService.createEcole(dataecole)
       .subscribe(
         response => {
           console.log(response);
+          const resp=response as Ecole;
+          const datauser = {
+            nom: this.utilisateur.nom,
+            prenom: this.utilisateur.prenom,
+            email: this.utilisateur.email,
+            password: this.utilisateur.password,
+            tel: "0000000000",
+            roleEnum: 3,    
+            adresse: "adresse",
+            dateNaissance: new Date(),
+            idEcole: resp.idEcole
+          };
           this.utilisateurService.createutilisateur(datauser).subscribe(
             response => {
               console.log(response);

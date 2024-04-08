@@ -12,5 +12,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
 
     Utilisateur findByEmail(String email);
     List<Utilisateur> findAllByDeletedFalse();
-    List<Utilisateur> findAllByRoleEnumAndDeletedFalse(RoleEnum roleEnum);
+    List<Utilisateur> findAllByRoleEnumAndIdEcoleAndDeletedFalse(RoleEnum role, long id);
 }

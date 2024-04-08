@@ -16,6 +16,7 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private String email;
     private String role;
+    private long idEcole;
 
     public CustomUserDetails(Utilisateur userCredential)
     {
@@ -23,6 +24,7 @@ public class CustomUserDetails implements UserDetails {
         this.password = userCredential.getPassword();
         this.email = userCredential.getEmail();
         this.role = userCredential.getRoleEnum().name();
+        this.idEcole=userCredential.getIdEcole();
     }
 
     @Override

@@ -1,7 +1,9 @@
 export class LoggedUser{
 
-    constructor(public username:string,
+    constructor(public id: number,
+                public username:string,
                 public roles:string,
+                public idecole:number,
                 private _token:string,
                 public _expiration:Date) {
     }

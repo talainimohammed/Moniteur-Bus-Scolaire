@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {LoggedUser} from "../models/logged-user";
 import {Router} from "@angular/router";
+import { Userdata } from '../models/userdata';
 
 @Injectable({
   providedIn: 'root'
@@ -24,15 +25,12 @@ export class AuthService {
     const formData=new FormData();
     formData.append('email',user.email);
     formData.append('password',user.password);
-    console.log(user);
     return this.http.post<LoginResponse>(this.url,user,this.requestOptions);
   }
   saveToken(jwtTokens:LoginResponse){
-  const decodedAccessToken=this.jwtHelperService.decodeToken(jwtTokens.token);
-
-  const loggedUser = new LoggedUser(decodedAccessToken.sub,decodedAccessToken.role,jwtTokens.token,this.getExpirationDate(decodedAccessToken.exp));
+  const decodedAccessToken=this.jwtHelperService.decodeToken(jwtTokens.token);    
+  const loggedUser = new LoggedUser(decodedAccessToken.id,decodedAccessToken.sub,decodedAccessToken.role,decodedAccessToken.idecole,jwtTokens.token,this.getExpirationDate(decodedAccessToken.exp));
     this.user.next(loggedUser);
-    console.log(loggedUser);
     this.autologout(this.getExpirationDate(decodedAccessToken.exp).valueOf()-new Date().valueOf());
     localStorage.setItem("userData",JSON.stringify(loggedUser));
 
@@ -56,14 +54,9 @@ export class AuthService {
       this.router.navigateByUrl("/")
   }
   autoLogin(){
-    const userData:{
-      email:string,
-      roles:string,
-      _token:string,
-      _expiration:Date
-    } = JSON.parse(localStorage.getItem('userData') as string);
+    const userData:Userdata = JSON.parse(localStorage.getItem('userData') as string);
     if(!userData)return;
-    const  loadedUser=new LoggedUser(userData.email,userData.roles,userData._token,new Date(userData._expiration));
+    const loadedUser=new LoggedUser(userData.id ?? 0,userData.email ?? '',userData.roles?? '',userData.idecole?? 0,userData._token?? '',new Date(userData._expiration?? ''));
     if(loadedUser.token){
       this.user.next(loadedUser);
       this.autologout(loadedUser._expiration.valueOf()- new Date().valueOf());

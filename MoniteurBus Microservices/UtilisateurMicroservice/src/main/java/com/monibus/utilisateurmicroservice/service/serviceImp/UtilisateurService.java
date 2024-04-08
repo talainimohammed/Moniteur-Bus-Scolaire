@@ -46,6 +46,14 @@ public class UtilisateurService implements IUtilisateur {
         return this.utilisateurRepository.findAllByDeletedFalse().stream().map(u->modelMapper.map(u,UtilisateurDTO.class)).toList();
     }
 
+    /*@Override
+    public List<UtilisateurDTO> afficherUtilisateursByEcoleId(long id) {
+        List<Utilisateur> utilisateurs=this.utilisateurRepository.findAllByEcoleIdAndDeletedFalse(id);
+        if (utilisateurs!=null)
+            return utilisateurs.stream().map(u->modelMapper.map(u,UtilisateurDTO.class)).toList();
+        return null;
+    }*/
+
     @Override
     public UtilisateurDTO afficherUtilisateurById(long id) {
         Utilisateur utilisateur=this.utilisateurRepository.findById(id).orElse(null);
@@ -54,8 +62,8 @@ public class UtilisateurService implements IUtilisateur {
     }
 
     @Override
-    public List<UtilisateurDTO> afficherUtilisateurByRole(int roleEnum) {
-        List<Utilisateur> utilisateurs=this.utilisateurRepository.findAllByRoleEnumAndDeletedFalse(RoleEnum.getRoleEnum(roleEnum));
+    public List<UtilisateurDTO> afficherUtilisateurByRole(int roleEnum,long idEcole) {
+        List<Utilisateur> utilisateurs=this.utilisateurRepository.findAllByRoleEnumAndIdEcoleAndDeletedFalse(RoleEnum.getRoleEnum(roleEnum),idEcole);
         if (utilisateurs!=null)
             return utilisateurs.stream().map(u->modelMapper.map(u,UtilisateurDTO.class)).toList();
         return null;
@@ -70,8 +78,8 @@ public class UtilisateurService implements IUtilisateur {
         return this.utilisateurRepository.save(utilisateur).isDeleted();
     }
     @Override
-    public String generateToken(Long id, String email, String role) {
-        return jwtService.generateToken(id,email, role);
+    public String generateToken(Long id, String email, String role,Long idEcole){
+        return jwtService.generateToken(id,email, role,idEcole);
 
     }
 

@@ -10,4 +10,5 @@ import java.util.List;
 public interface BusRepository extends JpaRepository<Bus,Long> {
 
     List<Bus> findByDeletedFalse();
+    List<Bus> findAllByIdecoleAndDeletedFalse(long idEcole);
 }

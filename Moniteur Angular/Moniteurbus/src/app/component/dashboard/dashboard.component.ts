@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Userdata } from '../../models/userdata';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,7 @@ export class DashboardComponent {
   markerPositions: google.maps.LatLngLiteral[] = [];
   check=false;
   markerPosition: google.maps.LatLngLiteral ={lat: 0, lng: 0};
-
+  userData:Userdata=new Userdata();
   ngOnInit() {
     navigator.geolocation.getCurrentPosition((position) => {
       this.center = {
@@ -33,6 +34,9 @@ export class DashboardComponent {
       this.markerPositions.push(this.center);
       console.log(this.markerPositions);
     });
+    this.userData= JSON.parse(localStorage.getItem('userData') as string);
+      const id_ecole = this.userData ? this.userData.idecole : null;
+      console.log(id_ecole);
   
     
   }

@@ -30,6 +30,7 @@ public class Utilisateur {
     private String email;
     private String password;
     private RoleEnum roleEnum;
+    private long idEcole;
     @Column(name = "isDeleted")
     private boolean deleted;
 

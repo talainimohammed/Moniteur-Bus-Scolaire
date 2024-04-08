@@ -20,9 +20,9 @@ public class BusController {
         this.ibus=bus;
     }
 
-    @GetMapping
-    public ResponseEntity<List<BusDTO>> tousBus(){
-        List<BusDTO> busDTOS=this.ibus.afficherBuses();
+    @GetMapping("/ecole/{idEcole}")
+    public ResponseEntity<List<BusDTO>> tousBus(@PathVariable(value = "idEcole") long idEcole){
+        List<BusDTO> busDTOS=this.ibus.afficherBuses(idEcole);
         return new ResponseEntity<>(busDTOS, HttpStatus.OK);
     }
     @GetMapping("/{id}")

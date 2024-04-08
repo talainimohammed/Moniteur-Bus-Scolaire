@@ -40,7 +40,7 @@ class BusServiceTest {
     @Test
     void afficherBuses() {
         BusDTO busDTO1=busService.addBus(busDTO);
-        assertNotNull(busService.afficherBuses());
+        assertNotNull(busService.afficherBuses(1L));
     }
 
     @Test

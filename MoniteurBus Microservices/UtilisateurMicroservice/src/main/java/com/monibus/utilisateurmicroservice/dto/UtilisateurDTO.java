@@ -36,6 +36,7 @@ public class UtilisateurDTO {
     @NotEmpty(message = "password utilisateur empty")
     @NotNull(message = "password utilisateur null")
     private String password;
+    private long idEcole;
     private RoleEnum roleEnum;
     private boolean isDeleted;
 

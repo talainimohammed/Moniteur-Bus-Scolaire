@@ -9,5 +9,6 @@ export class Utilisateur {
     tel?: string;
     email?: string;
     password?: string;
+    idEcole?: number;
     roleEnum?: Role;
 }
