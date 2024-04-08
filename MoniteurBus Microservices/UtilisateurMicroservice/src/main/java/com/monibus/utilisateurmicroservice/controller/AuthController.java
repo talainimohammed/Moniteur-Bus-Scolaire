@@ -13,8 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/v1/utilisateur/auth")
+@CrossOrigin("*")
+@RequestMapping(value ="/api/v1/utilisateur/auth", produces = "application/json")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
@@ -23,8 +27,9 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/token")
-    public String getToken(@RequestBody LoginDto LoginDto)
+    public ResponseEntity<Map<String,String>> getToken(@RequestBody LoginDto LoginDto)
     {
+        Map<String,String>map =new HashMap<>();
         log.info("Authenticating user {} ", LoginDto.getEmail());
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(LoginDto.getEmail(), LoginDto.getPassword()));
         log.info("Authenticated user {} ", authenticate);
@@ -35,8 +40,8 @@ public class AuthController {
             Long idUser = userDetails.getId();
             String email = userDetails.getEmail();
             String role = userDetails.getRole();
-            return userService.generateToken(idUser,email, role);
-
+            map.put("token",userService.generateToken(idUser,email, role));
+            return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
             throw new RuntimeException("invalid access !");
         }

@@ -7,6 +7,7 @@ export class Etudiant {
       tel?: string;
       niveau?: string;
       email?: string;
+      password?: string;
       busId?: number;
       locationId?: number;
       latitude?:number;

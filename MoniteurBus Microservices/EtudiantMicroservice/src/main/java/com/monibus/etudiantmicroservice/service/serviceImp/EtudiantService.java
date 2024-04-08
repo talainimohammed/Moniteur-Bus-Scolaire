@@ -6,6 +6,9 @@ import com.monibus.etudiantmicroservice.repository.EtudiantRepository;
 import com.monibus.etudiantmicroservice.service.IEtudiant;
 import com.monibus.location.LocationClient;
 import com.monibus.location.LocationDTO;
+import com.monibus.utilisateur.RoleEnum;
+import com.monibus.utilisateur.UtilisateurClient;
+import com.monibus.utilisateur.UtilisateurDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +21,16 @@ import java.util.List;
 public class EtudiantService implements IEtudiant {
 
     private final LocationClient locationClient;
+    private final UtilisateurClient utilisateurClient;
 
 
     private EtudiantRepository etudiantRepository;
     private ModelMapper modelMapper;
-    public EtudiantService(EtudiantRepository etudiantRepository,ModelMapper modelMapper,LocationClient locationClient){
+    public EtudiantService(EtudiantRepository etudiantRepository, ModelMapper modelMapper, LocationClient locationClient, UtilisateurClient utilisateurClient){
         this.etudiantRepository=etudiantRepository;
         this.modelMapper=modelMapper;
         this.locationClient=locationClient;
+        this.utilisateurClient = utilisateurClient;
     }
 
     @Override
@@ -38,6 +43,18 @@ public class EtudiantService implements IEtudiant {
         if(locationDTO==null) throw new NullPointerException();
         etudiantDTO.setLocationId(locationDTO.getIdLocation());
         EtudiantDTO etudiantDTO1=modelMapper.map(this.etudiantRepository.save(modelMapper.map(etudiantDTO, Etudiant.class)),EtudiantDTO.class);
+        if (etudiantDTO1!=null) {
+            UtilisateurDTO utilisateurDTO=new UtilisateurDTO();
+            utilisateurDTO.setNom(etudiantDTO1.getNom());
+            utilisateurDTO.setPrenom(etudiantDTO1.getPrenom());
+            utilisateurDTO.setEmail(etudiantDTO1.getEmail());
+            utilisateurDTO.setRoleEnum(RoleEnum.PARENT);
+            utilisateurDTO.setAdresse(etudiantDTO1.getAdresse());
+            utilisateurDTO.setTel(etudiantDTO1.getTel());
+            utilisateurDTO.setDateNaissance(etudiantDTO1.getDateNaissance());
+            utilisateurDTO.setPassword(etudiantDTO.getPassword());
+            utilisateurClient.saveUtilisateur(utilisateurDTO);
+        }
         etudiantDTO1.setLatitude(locationDTO.getLatitude());
         etudiantDTO1.setLongtitude(locationDTO.getLongtitude());
         return etudiantDTO1;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app.routes';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -24,6 +24,8 @@ import { EtudiantLocalisationComponent } from './component/etudiant-localisation
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { MobileInterfaceComponent } from './component/mobile-interface/mobile-interface.component';
 import { LoginComponent } from './component/login/login.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { RegistrationComponent } from './component/registration/registration.component';
 
 @NgModule({
     declarations: [
@@ -42,12 +44,15 @@ import { LoginComponent } from './component/login/login.component';
         SuiviBusComponent,
         MobileInterfaceComponent,
         LoginComponent,
-        DashboardComponent
+        DashboardComponent,
+        RegistrationComponent
     ],
     providers: [
         DatePipe,
         ReactiveFormsModule,
         FormsModule,
+        {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptorService,multi:true},
+        {provide: 'url_login', useValue: 'http://localhost:3333/api/v1/utilisateur/auth/token'}
     ],
     bootstrap: [AppComponent],
     imports: [

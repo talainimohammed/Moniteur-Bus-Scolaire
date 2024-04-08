@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping(value ="/api/v1/utilisateur", produces = "application/json")
 public class UtilisateurContoller {
 

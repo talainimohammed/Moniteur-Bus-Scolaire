@@ -6,6 +6,8 @@ import { BusService } from '../../../services/bus.service';
 import { Bus } from '../../../models/bus';
 import { ChauffeurService } from '../../../services/chauffeur.service';
 import { Chauffeur } from '../../../models/chauffeur';
+import { Utilisateur } from '../../../models/utilisateur';
+import { UtilisateurService } from '../../../services/utilisateur.service';
 
 @Component({
   selector: 'app-etudiant-profile',
@@ -18,9 +20,10 @@ export class EtudiantProfileComponent implements OnInit{
   bus?: Bus[];
   onebus?: Bus=new Bus();
   chauffeur: Chauffeur=new Chauffeur();
+  utilisateur: Utilisateur=new Utilisateur();
   id:number=0;
   submitted=false;
-  constructor(private etudiantservice:EtudiantService,private busService:BusService,private chauffeurService:ChauffeurService,private route: ActivatedRoute) { }
+  constructor(private etudiantservice:EtudiantService,private utilisateurService:UtilisateurService,private busService:BusService,private chauffeurService:ChauffeurService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     if(this.route.snapshot.params['id']!=null){
@@ -86,6 +89,7 @@ export class EtudiantProfileComponent implements OnInit{
       adresse:this.etudiant.adresse,
       dateNaissance:this.etudiant.dateNaissance,
       email:this.etudiant.email,
+      password:this.etudiant.password,
       tel:this.etudiant.tel,
       niveau:this.etudiant.niveau,
       busId:this.etudiant.busId,
@@ -95,7 +99,6 @@ export class EtudiantProfileComponent implements OnInit{
       ecoleId:1
     };
     console.log(data);
-    
     this.etudiantservice.createEtudiant(data).subscribe(
       response=>{
         console.log(response);

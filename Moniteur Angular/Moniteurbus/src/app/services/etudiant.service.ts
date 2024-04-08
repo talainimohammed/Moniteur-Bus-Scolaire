@@ -12,8 +12,7 @@ export class EtudiantService {
   private apiurl = environment.urlapi + "/etudiant";
   private token=environment.tokenstring;
   private headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${this.token}`
+    'Content-Type': 'application/json'
   });
   private requestOptions = { headers: this.headers };
   constructor(private httpclient: HttpClient) { }

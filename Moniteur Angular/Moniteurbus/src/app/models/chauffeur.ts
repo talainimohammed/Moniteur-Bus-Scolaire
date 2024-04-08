@@ -8,5 +8,6 @@ export class Chauffeur {
     dateNaissance?: Date;
     tel?: string;
     email?: string;
+    password?: string;
     roleEnum?: Role;
 }

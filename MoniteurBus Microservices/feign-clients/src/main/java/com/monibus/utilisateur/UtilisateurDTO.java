@@ -2,6 +2,7 @@ package com.monibus.utilisateur;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -10,9 +11,9 @@ public class UtilisateurDTO {
     private String nom;
     private String prenom;
     private String adresse;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     private String tel;
-    private String username;
+    private String email;
     private String password;
     private RoleEnum roleEnum;
     private boolean isDeleted;

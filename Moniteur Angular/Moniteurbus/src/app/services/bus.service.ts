@@ -12,7 +12,6 @@ export class BusService {
   private token=environment.tokenstring;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${this.token}`
   });
   private requestOptions = { headers: this.headers };
   getBus(){
