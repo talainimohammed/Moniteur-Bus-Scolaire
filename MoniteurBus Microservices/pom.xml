@@ -19,9 +19,9 @@
 		<module>api-gateway</module>
 		<module>config-server</module>
 		<module>LocationMicroservice</module>
-		<module>EcoleMicroservice</module>
 		<module>EtudiantMicroservice</module>
 		<module>UtilisateurMicroservice</module>
+		<module>EcoleMicroservice</module>
 		<module>NotificationMicroservice</module>
 		<module>BusMicroservice</module>
 		<module>eureka-server</module>
