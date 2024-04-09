@@ -95,6 +95,92 @@ services:
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+  user-service:
+    container_name: user-microservice
+    build:
+      context: .
+      dockerfile: UtilisateurMicroservice/Dockerfile
+    ports:
+      - "5560:5560"
+    networks:
+      - db
+    depends_on:
+      - utilisateur-db
+    restart: unless-stopped
+  ecole-service:
+    container_name: ecole-microservice
+    build:
+      context: .
+      dockerfile: EcoleMicroservice/Dockerfile
+    ports:
+      - "5555:5555"
+    networks:
+      - db
+    depends_on:
+      - ecole-db
+    restart: unless-stopped
+  etudiant-service:
+    container_name: etudiant-microservice
+    build:
+      context: .
+      dockerfile: EtudiantMicroservice/Dockerfile
+    ports:
+      - "5557:5557"
+    networks:
+      - db
+    depends_on:
+      - etudiant-db
+    restart: unless-stopped
+  location-service:
+    container_name: location-microservice
+    build:
+      context: .
+      dockerfile: LocationMicroservice/Dockerfile
+    ports:
+      - "5558:5558"
+    networks:
+      - db
+    depends_on:
+      - location-db
+    restart: unless-stopped
+  bus-service:
+    container_name: bus-microservice
+    build:
+      context: .
+      dockerfile: BusMicroservice/Dockerfile
+    ports:
+      - "5556:5556"
+    networks:
+      - db
+    depends_on:
+      - bus-db
+    restart: unless-stopped
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    ports:
+      - "3333:3333"
+    networks:
+      - db
+    depends_on:
+      - user-service
+      - ecole-service
+      - etudiant-service
+      - location-service
+      - bus-service
+    restart: unless-stopped
+  eureka-service:
+    container_name: eureka-service
+    build:
+      context: .
+      dockerfile: eureka-server/Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - db
+    restart: unless-stopped
 
 networks:
   db:
