@@ -15,7 +15,7 @@
 	<name>moniteurbus</name>
 	<description>Demo project for Spring Boot</description>
 	<modules>
-		<module>feign-clients</module>
+		<!--<module>feign-clients</module>-->
 		<module>api-gateway</module>
 		<module>config-server</module>
 		<module>LocationMicroservice</module>
