@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Bus } from '../../../models/bus';
 import { BusService } from '../../../services/bus.service';
 import { Userdata } from '../../../models/userdata';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-chauffeur-profile',
@@ -24,19 +25,39 @@ export class ChauffeurProfileComponent implements OnInit{
   id: number=0;
   constructor( private chauffeurService:ChauffeurService,private busService:BusService,private route: ActivatedRoute) { }
   ngOnInit(): void {
-    this.getBus();
     this.userData= JSON.parse(localStorage.getItem('userData') as string);
     this.id_ecole = this.userData.idecole ?? 0;
+    this.getBus(this.id_ecole);
     if(this.route.snapshot.params['id']!=null){
       this.id= this.route.snapshot.params['id'];
       this.getChauffeur(this.id);
     }
   }
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      if(this.id==0){
+        this.saveChauffeur();
+      }else{
+        this.updateChauffeur(this.id);
+      }
+    } else {
+      form.controls['nom'].markAsTouched();
+      form.controls['first_name'].markAsTouched();
+      form.controls['address'].markAsTouched();
+      form.controls['datenaissance'].markAsTouched();
+      form.controls['pass'].markAsTouched();
+      form.controls['email'].markAsTouched();
+      form.controls['tel'].markAsTouched();
+      form.controls['bus'].markAsTouched();
+
+    }
+  }
   onChange($event: Event) {
     console.log(this.busupdate);
   }
-  getBus(){
-      this.busService.getBus(this.id_ecole).subscribe(
+  getBus(id:number){
+    console.log("hello world"+id);
+      this.busService.getBus(id).subscribe(
         data=>{
           this.bus = data as Bus[];
           console.log(data);

@@ -11,4 +11,5 @@ public interface BusRepository extends JpaRepository<Bus,Long> {
 
     List<Bus> findByDeletedFalse();
     List<Bus> findAllByIdecoleAndDeletedFalse(long idEcole);
+    Bus findByIdchauffeur(long id);
 }

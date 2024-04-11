@@ -1,95 +1,124 @@
 <div class="container-fluid">
   <h3 class="text-dark mb-4">Profile Chauffeur</h3>
   <div class="row mb-3">
-    <div class="col-lg-4">
-      <div class="card mb-3">
-        <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="160" height="160">
-          <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-8">
+    <div class="col-lg-10">
       <div class="row">
         <div class="col">
-            <form *ngIf="!submitted">
-            <div class="card shadow mb-3">
-              <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Infos Chauffeur</p>
-              </div>
-              <div class="card-body">
+            <form  (ngSubmit)="onSubmit(form)" #form="ngForm">
+              <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 fw-bold">Infos Chauffeur</p>
+                </div>
+                <div class="card-body"></div>
                   <div class="row">
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="username"><strong>Nom Chauffeur</strong></label>
-                      
-                        <input class="form-control" type="text" id="nom" placeholder="jeff" [(ngModel)]="chauffeur.nom" name="nom"></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="username"><strong>Nom Chauffeur</strong></label>
+                        <input class="form-control" type="text" id="nom" placeholder="jeff" [(ngModel)]="chauffeur.nom" name="nom" required #nom="ngModel">
+                        <div *ngIf="form.controls['nom'].invalid && (form.controls['nom'].dirty || form.controls['nom'].touched)" class="text-danger">
+                          <div *ngIf="form.controls['nom'].errors?.['required']">Nom Chauffeur est requis.</div>
+                        </div>
+                      </div>
                     </div>
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="email"><strong>Email Chauffeur</strong></label>
-                        <input class="form-control" type="email" id="email" placeholder="user@example.com" [(ngModel)]="chauffeur.email" name="email"></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="email"><strong>Email Chauffeur</strong></label>
+                        <input class="form-control" type="email" id="email" placeholder="user@example.com" [(ngModel)]="chauffeur.email" name="email" required>
+                        <div *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)" class="text-danger">
+                          <div *ngIf="form.controls['email'].errors?.['required']">Email Chauffeur est requis.</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="first_name"><strong>Prenom Chauffeur</strong></label>
-                        <input class="form-control" type="text" id="first_name" [(ngModel)]="chauffeur.prenom" placeholder="John" name="first_name"></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="first_name"><strong>Prenom Chauffeur</strong></label>
+                        <input class="form-control" type="text" id="first_name" [(ngModel)]="chauffeur.prenom" placeholder="John" name="first_name" required>
+                        <div *ngIf="form.controls['first_name'].invalid && (form.controls['first_name'].dirty || form.controls['first_name'].touched)" class="text-danger">
+                          <div *ngIf="form.controls['first_name'].errors?.['required']">Prenom Chauffeur est requis.</div>
+                        </div>
+                      </div>
                     </div>
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="tel"><strong>Tel Chauffeur</strong></label>
-                        <input class="form-control" type="tel" id="tel" placeholder="061234687" [(ngModel)]="chauffeur.tel" name="tel"></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="tel"><strong>Tel Chauffeur</strong></label>
+                        <input class="form-control" type="tel" id="tel" placeholder="061234687" [(ngModel)]="chauffeur.tel" name="tel" required>
+                        <div *ngIf="form.controls['tel'].invalid && (form.controls['tel'].dirty || form.controls['tel'].touched)" class="text-danger">
+                          <div *ngIf="form.controls['tel'].errors?.['required']">Tel Chauffeur est requis.</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="row">
-    
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="datenaissance"><strong>Date Naissance</strong></label>
-                        <input class="form-control" type="date" id="datenaissance" placeholder="22/02/1995" [(ngModel)]="chauffeur.dateNaissance" name="datenaissance"></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="datenaissance"><strong>Date Naissance</strong></label>
+                        <input class="form-control" type="date" id="datenaissance" placeholder="22/02/1995" [(ngModel)]="chauffeur.dateNaissance" name="datenaissance" required>
+                        <div *ngIf="form.controls['datenaissance'].invalid && (form.controls['datenaissance'].dirty || form.controls['datenaissance'].touched)" class="text-danger">
+                          <div *ngIf="form.controls['datenaissance'].errors?.['required']">Date Naissance est requis.</div>
+                        </div>
+                      </div>
                     </div>
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="pass"><strong>Password</strong></label>
-                        <input class="form-control" type="password" id="pass" placeholder="password" [(ngModel)]="chauffeur.password" name="pass"></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="pass"><strong>Password</strong></label>
+                        <input class="form-control" type="password" id="pass" placeholder="password" [(ngModel)]="chauffeur.password" name="pass" required>
+                        <div *ngIf="form.controls['pass'].invalid && (form.controls['pass'].dirty || form.controls['pass'].touched)" class="text-danger">
+                          <div *ngIf="form.controls['pass'].errors?.['required']">Password est requis.</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-              </div>
-              <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Transport a conduire</p>
-              </div>
-              <div class="card-body">
-                  <div class="mb-3"><label class="form-label" for="busid"><strong>Numero Bus</strong></label>
-                    <select name="bus" class="form-control" id="bus" (change)='onChange($event)' [(ngModel)]="busupdate">
+                </div>
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 fw-bold">Transport a conduire</p>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label" for="busid"><strong>Numero Bus</strong></label>
+                    <select name="bus" class="form-control" id="bus" (change)="onChange($event)" [(ngModel)]="busupdate" required>
                       <option *ngFor="let b of bus" [ngValue]="b">{{b.idBus}}</option>
                     </select>
+                    <div *ngIf="form.controls['bus'].invalid && (form.controls['bus'].dirty || form.controls['bus'].touched)" class="text-danger">
+                      <div *ngIf="form.controls['bus'].errors?.['required']">Numero Bus est requis.</div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="Nchauffeur"><strong>Matricule</strong></label>
-                        <input class="form-control" type="text" id="Nchauffeur" [(ngModel)]="busupdate.matricule" placeholder="matricule" name="matricule" disabled></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="Nchauffeur"><strong>Matricule</strong></label>
+                        <input class="form-control" type="text" id="Nchauffeur" [(ngModel)]="busupdate.matricule" placeholder="matricule" name="matricule" disabled>
+                      </div>
                     </div>
                     <div class="col">
-                      <div class="mb-3"><label class="form-label" for="telchauffeur"><strong>Nombre de places</strong></label>
-                        <input class="form-control" type="tel" id="telchauffeur"[(ngModel)]="busupdate.nbplaces" placeholder="20" name="nbplace" disabled></div>
+                      <div class="mb-3">
+                        <label class="form-label" for="telchauffeur"><strong>Nombre de places</strong></label>
+                        <input class="form-control" type="tel" id="telchauffeur"[(ngModel)]="busupdate.nbplaces" placeholder="20" name="nbplace" disabled>
+                      </div>
                     </div>
                   </div>
-              </div>
-              <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Localisation Chauffeur</p>
-              </div>
-              <div class="card-body">
-                  <div class="mb-3"><label class="form-label" for="address"><strong>Addresse</strong></label>
-                    <input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" [(ngModel)]="chauffeur.adresse" name="address">
+                </div>
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 fw-bold">Localisation Chauffeur</p>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label" for="address"><strong>Addresse</strong></label>
+                    <input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" [(ngModel)]="chauffeur.adresse" name="address" required>
+                    <div *ngIf="form.controls['address'].invalid && (form.controls['address'].dirty || form.controls['address'].touched)" class="text-danger">
+                      <div *ngIf="form.controls['address'].errors?.['required']">Addresse est requis.</div>
+                    </div>
                   </div>
-                  
                   <div class="mb-3" *ngIf="id==0">
-                    <button class="btn btn-primary btn-sm" (click)="saveChauffeur()" type="submit">Enregistrer</button>
+                    <button class="btn btn-primary btn-sm" type="submit">Enregistrer</button>
                   </div>
                   <div class="mb-3" *ngIf="id!=0">
-                    <button class="btn btn-primary btn-sm" (click)="updateChauffeur(chauffeur.idUtilisateur || 0)" type="submit">Modifer</button>
+                    <button class="btn btn-primary btn-sm" type="submit">Modifer</button>
                   </div>
-              </div>
-            </div>
-          </form>
-        </div>
+                </div>
+            </form>
       </div>
     </div>
   </div>
-  <div class="card shadow mb-5"></div>
 </div>

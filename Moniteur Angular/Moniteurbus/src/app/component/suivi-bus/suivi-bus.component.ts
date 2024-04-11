@@ -117,7 +117,7 @@ export class SuiviBusComponent implements OnInit{
         }
       };
       let groupedDataJson = JSON.stringify(groupedData);
-      this.suiviBus.addRealTimeLoc(groupedDataJson).subscribe((data:any)=>{
+      this.suiviBus.addRealTimeLoc(this.currentpos.idbus,groupedDataJson).subscribe((data:any)=>{
         this.getRealTimeLoc(3);
       });
     }

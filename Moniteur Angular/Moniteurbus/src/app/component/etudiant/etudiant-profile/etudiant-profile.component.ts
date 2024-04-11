@@ -9,6 +9,7 @@ import { Chauffeur } from '../../../models/chauffeur';
 import { Utilisateur } from '../../../models/utilisateur';
 import { UtilisateurService } from '../../../services/utilisateur.service';
 import { Userdata } from '../../../models/userdata';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-etudiant-profile',
@@ -38,6 +39,28 @@ export class EtudiantProfileComponent implements OnInit{
       this.retrieveEtudiant(this.id);
     }
     this.getBus();
+  }
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      if(this.id==0){
+        this.saveEtudiant();
+      }else{
+        this.updateEtudiant(this.id);
+      }
+    } else {
+      form.controls['username'].markAsTouched();
+      form.controls['first_name'].markAsTouched();
+      form.controls['address'].markAsTouched();
+      form.controls['datenaissance'].markAsTouched();
+      form.controls['password'].markAsTouched();
+      form.controls['email'].markAsTouched();
+      form.controls['tel'].markAsTouched();
+      form.controls['niveau'].markAsTouched();
+      form.controls['bus'].markAsTouched();
+      form.controls['latitude'].markAsTouched();
+      form.controls['longtitude'].markAsTouched();
+
+    }
   }
   onChange($event: Event) {
     if (this.etudiant.busId!=null) {

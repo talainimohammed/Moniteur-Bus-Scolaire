@@ -10,5 +10,6 @@ public interface IBus {
     public BusDTO modBus(BusDTO busDTO,long id);
     public List<BusDTO> afficherBuses(long idEcole);
     public BusDTO afficherBus(long id);
+    public BusDTO afficherBusbyChauffeur(long id);
     public boolean delBus(long id);
 }

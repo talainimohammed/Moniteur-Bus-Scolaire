@@ -15,11 +15,11 @@ export class SidenavComponent {
   id_ecole:number=0;
   role:string="";
   userSub!:Subscription;
-  isAuthenticated=false;
-  isAdmin=false;
-  isEcole=false;
-  isParent=false;
-  isChauffeur=false;
+  isAuthenticated=true;
+  isAdmin=true;
+  isEcole=true;
+  isParent=true;
+  isChauffeur=true;
   name:string|undefined;
   constructor(private authService:AuthService) { }
 
@@ -34,15 +34,16 @@ export class SidenavComponent {
         this.name=loggedUser?.username
       }
     });
+    this.isAuthenticated=true;
     /*this.userData= JSON.parse(localStorage.getItem('userData') as string);
     this.id_ecole = this.userData.idecole ?? 0;*/
 
   }
   initializeState(){
-    this.isAdmin=false;
-    this.isParent=false;
-    this.isEcole=false;
-    this.isChauffeur=false;
+    this.isAdmin=true;
+    this.isParent=true;
+    this.isEcole=true;
+    this.isChauffeur=true;
   }
   setRole(loggedUser:LoggedUser|null){
     if(loggedUser?.roles.includes("ADMINISTRATEUR"))

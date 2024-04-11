@@ -8,16 +8,19 @@ import { SuiviBus } from '../models/suivi-bus';
 })
 export class FirebaseService {
 
-  private apiurl="https://monitor-bus-default-rtdb.firebaseio.com/loc/bus.json";
+  private apiurl="https://monitor-bus-default-rtdb.firebaseio.com/loc/bus";
   constructor(private httpclient:HttpClient) { }
 
   getRealTimeLoc(){
-    return this.httpclient.get(this.apiurl);
+    return this.httpclient.get(this.apiurl+".json");
   }
-  addRealTimeLoc(data:any){
-    return this.httpclient.put(this.apiurl, data);
+  addRealTimeLoc(idbus:number,data:any){
+    return this.httpclient.put(this.apiurl+"/"+idbus+".json", data);
+  }
+  updateRealTimeLoc(data:any){
+    return this.httpclient.put(this.apiurl+".json", data);
   }
   getRealTimeLocByBusId(){
-    return this.httpclient.get(this.apiurl);
+    return this.httpclient.get(this.apiurl+".json");
   }
 }

@@ -73,6 +73,15 @@ public class BusService implements IBus {
     }
 
     @Override
+    public BusDTO afficherBusbyChauffeur(long id) {
+        Bus bus=busRepository.findByIdchauffeur(id);
+        if(bus!=null){
+            return modelMapper.map(bus, BusDTO.class);
+        }
+        return null;
+    }
+
+    @Override
     public boolean delBus(long id) {
         Bus bus=busRepository.findById(id).orElse(null);
         if(bus == null)throw new NullPointerException();

@@ -20,6 +20,9 @@ export class BusService {
   getBusById(id:any){
     return this.httpclient.get(this.apiurl+"/"+id, this.requestOptions);
   }
+  getBusByChauffeur(id:any){
+    return this.httpclient.get(this.apiurl+"/chauffeur/"+id, this.requestOptions);
+  }
   addBus(bus:any){
     return this.httpclient.post(this.apiurl,bus, this.requestOptions);
   }

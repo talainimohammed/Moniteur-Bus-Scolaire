@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './topnav.component.css'
 })
 export class TopnavComponent {
-  isAuthenticated=false;
+  isAuthenticated=true;
   userSub!:Subscription;
   name="";
   iduser:number=0;
@@ -25,6 +25,8 @@ export class TopnavComponent {
         this.iduser=loggedUser?.id;
       }
     });
+    this.isAuthenticated=true;
+
   }
   logout() {
     this.authService.logout();

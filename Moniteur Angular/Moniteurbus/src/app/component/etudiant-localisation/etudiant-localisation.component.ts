@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from '../../services/firebase.service';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute } from '@angular/router';
+import { Userdata } from '../../models/userdata';
+import { Bus } from '../../models/bus';
+import { BusService } from '../../services/bus.service';
 @Component({
   selector: 'app-etudiant-localisation',
   templateUrl: './etudiant-localisation.component.html',
@@ -17,10 +20,12 @@ export class EtudiantLocalisationComponent implements OnInit{
 
   etudiant:Etudiant=new Etudiant();
   idetudiant=0;
+  idchauffeur=0;
   center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
   currentpos:SuiviBus=new SuiviBus();
   destinationpos:google.maps.LatLngLiteral = {lat: 0, lng: 0};
-  //  destinationpos:google.maps.LatLngLiteral = {lat: 33.69088747096958, lng: -7.372760713061517};
+  userData:Userdata=new Userdata();
+  bus:Bus=new Bus();
   zoom = 15;
     options: google.maps.MapOptions = {
       zoomControl: true,
@@ -38,7 +43,7 @@ export class EtudiantLocalisationComponent implements OnInit{
     check=false;
     markerPosition: google.maps.LatLngLiteral ={lat: 0, lng: 0};
   
-    constructor(private suiviBus:FirebaseService,private etudiantService:EtudiantService,private http: HttpClient,private route:ActivatedRoute){}
+    constructor(private suiviBus:FirebaseService,private busService:BusService,private etudiantService:EtudiantService,private http: HttpClient,private route:ActivatedRoute){}
   
     origin = { lat: 33.70038747096962, lng: -7.370860713061521 };
     destination = { lat: 25, lng: 13 };
@@ -46,27 +51,39 @@ export class EtudiantLocalisationComponent implements OnInit{
     ngAfterViewInit() {
          
     }
+
     ngOnInit() {
       if(this.route.snapshot.params['id']){
         this.idetudiant=this.route.snapshot.params['id'];
       }
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        this.currentpos.idbus=3;    
-        this.currentpos.latitude=this.center.lat;
-        this.currentpos.longtitude=this.center.lng;
-        this.saveRealTimeLoc(this.currentpos);
-      });
-     // this.sendtofirebase();
-      /*setInterval(() => {
-      this.sendloc();
-    }, 5000);*/
+      this.userData= JSON.parse(localStorage.getItem('userData') as string);
+      this.idchauffeur = this.userData.id ?? 0;
+      this.getBusByChauffeur(this.idchauffeur);
+      
       this.check=true;
       this.retrieveEtudiant(this.idetudiant);
-      this.getRealTimeLoc(3);
+      setInterval(() => {
+        console.log('Hello');
+        if (this.bus) {
+          this.getRealTimeLoc(this.bus.idBus ?? 0);
+        }
+      }, 5000);
+    }
+    getBusByChauffeur(id:any){
+      this.busService.getBusByChauffeur(id).subscribe(data => {
+        this.bus = data;
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          this.currentpos.idbus=this.bus.idBus ?? 0;    
+          this.currentpos.latitude=this.center.lat;
+          this.currentpos.longtitude=this.center.lng;
+          this.saveRealTimeLoc(this.currentpos);
+        });
+        console.log(data);
+      });
     }
     circleCenter: google.maps.LatLngLiteral = {lat: 33.667782574792184, lng: -7.397301689965827};
   
@@ -95,7 +112,7 @@ export class EtudiantLocalisationComponent implements OnInit{
           }
     }
     sendloc() {
-      this.currentpos.idbus=3;    
+      this.currentpos.idbus=this.bus.idBus ?? 0;    
       this.currentpos.latitude=this.markerPositions[1].lat+0.0005;
       this.currentpos.longtitude=this.markerPositions[1].lng+0.0001;
       this.saveRealTimeLoc(this.currentpos);
@@ -163,9 +180,6 @@ export class EtudiantLocalisationComponent implements OnInit{
       //});
     }
     saveRealTimeLoc(currentpos:any){
-      /*this.currentpos.idbus=3;    
-      this.currentpos.latitude=this.markerPositions[1].lat+0.0005;
-      this.currentpos.longtitude=this.markerPositions[1].lng+0.0001;*/
       let groupedData = {
         [currentpos.idbus]: {
           idbus: this.currentpos.idbus,
@@ -174,9 +188,26 @@ export class EtudiantLocalisationComponent implements OnInit{
         }
       };
       let groupedDataJson = JSON.stringify(groupedData);
-      this.suiviBus.addRealTimeLoc(groupedDataJson).subscribe((data:any)=>{
-        this.getRealTimeLoc(3);
+      this.suiviBus.getRealTimeLoc().subscribe((data:any)=>{
+        if(data.length!=0 && data[currentpos.idbus] != null){      
+          let lastpos=data[currentpos.idbus];
+          console.log(lastpos);
+          this.suiviBus.updateRealTimeLoc(groupedDataJson).subscribe((data:any)=>{
+            this.getRealTimeLoc(this.currentpos.idbus ?? 0);
+          });
+        }
+        else{     
+            const gdata:any={
+              idbus: this.currentpos.idbus,
+              latitude: this.currentpos.latitude,
+              longtitude: this.currentpos.longtitude
+            } 
+            this.suiviBus.addRealTimeLoc(currentpos.idbus,gdata).subscribe((data:any)=>{
+              this.getRealTimeLoc(this.currentpos.idbus ?? 0);
+            });
+        }
       });
+
     }
     startLocation(){
       this.markerPosition={lat: 33.663996491485584, lng: -7.398519515991211};

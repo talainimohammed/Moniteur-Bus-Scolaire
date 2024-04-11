@@ -3,6 +3,7 @@ import {EcoleService} from "../../services/ecole.service";
 import {Ecole} from "../../models/ecole";
 import { ActivatedRoute } from '@angular/router';
 import { Userdata } from '../../models/userdata';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-ecole',
@@ -31,7 +32,25 @@ export class EcoleComponent implements OnInit{
         this.retrieveEcole(this.ecoleId);
       }
     }
+    onSubmit(form: NgForm) {
+      if (form.valid) {
+        this.saveEcole();
+      } else {
+        form.controls['nomEcole'].markAsTouched();
+        form.controls['email'].markAsTouched();
+        form.controls['tel'].markAsTouched();
+        form.controls['adresse'].markAsTouched();
+        form.controls['latitude'].markAsTouched();
+        form.controls['longtitude'].markAsTouched();
 
+      }
+    }
+    valid: boolean = false;
+    validate0(val: NgModel) {
+      if (val.value == 0) {
+        this.valid = true;
+      }
+    }
     retrieveEcole(id:number): void {
       this.ecoleService.getEcole(id)
         .subscribe(

@@ -3,6 +3,7 @@ import { BusService } from '../../../services/bus.service';
 import { Bus } from '../../../models/bus';
 import { ActivatedRoute } from '@angular/router';
 import { Userdata } from '../../../models/userdata';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-bus-profile',
@@ -25,9 +26,19 @@ export class BusProfileComponent implements OnInit{
       this.id = this.route.snapshot.params['id'];
       this.getBus(this.id);
     }
-
   }
-
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      if(this.id==0){
+        this.saveBus();
+      }else{
+        this.updateBus(this.id);
+      }
+    } else {
+      form.controls['matricule'].markAsTouched();
+      form.controls['nbplaces'].markAsTouched();
+    }
+  }
   saveBus(){
     const data = {
       matricule: this.bus.matricule,

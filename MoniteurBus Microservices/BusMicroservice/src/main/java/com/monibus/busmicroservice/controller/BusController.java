@@ -25,6 +25,11 @@ public class BusController {
         List<BusDTO> busDTOS=this.ibus.afficherBuses(idEcole);
         return new ResponseEntity<>(busDTOS, HttpStatus.OK);
     }
+    @GetMapping("/chauffeur/{idChauffeur}")
+    public ResponseEntity<BusDTO> busByChauffeur(@PathVariable(value = "idChauffeur") long idChauffeur){
+        BusDTO busDTO=this.ibus.afficherBusbyChauffeur(idChauffeur);
+        return new ResponseEntity<>(busDTO, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<BusDTO> getBus(@PathVariable(value = "id") long id){
         BusDTO busDTO=this.ibus.afficherBus(id);
