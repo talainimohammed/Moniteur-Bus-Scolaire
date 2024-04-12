@@ -13,7 +13,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="mb-3"><label class="form-label" for="username"><strong>Nom Ecole</strong></label>
-                      <input class="form-control" type="text" id="username" placeholder="user.name" [(ngModel)]="ecole.nomEcole" name="nomEcole" required #nomEcole="ngModel">
+                      <input class="form-control" type="text" id="username" placeholder="user.name" [(ngModel)]="ecole.nomEcole" name="nomEcole" required #nomEcole="ngModel" [disabled]="isnotEcole">
                       <div *ngIf="nomEcole.invalid && nomEcole.touched" class="text-danger">
                         Nom Ecole is required
                       </div>
@@ -21,7 +21,7 @@
                   </div>
                   <div class="col">
                     <div class="mb-3"><label class="form-label" for="email"><strong>Email Ecole</strong></label>
-                      <input class="form-control" type="email" id="email" placeholder="user@example.com" [(ngModel)]="ecole.email" name="email" required #email="ngModel">
+                      <input class="form-control" type="email" id="email" placeholder="user@example.com" [(ngModel)]="ecole.email" name="email" required #email="ngModel" [disabled]="isnotEcole">
                       <div *ngIf="email.invalid && email.touched" class="text-danger">
                         Email Ecole is required
                       </div></div>
@@ -29,13 +29,8 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <div class="mb-3"><label class="form-label" for="first_name"><strong>Nom Directeur</strong></label>
-                      <input class="form-control" type="text" id="first_name" placeholder="John" name="first_name">
-                      </div>
-                  </div>
-                  <div class="col">
-                    <div class="mb-3"><label class="form-label" for="last_name"><strong>Tel Ecole</strong></label>
-                      <input class="form-control" type="text" id="last_name" placeholder="Doe" [(ngModel)]="ecole.telephone" name="tel" required #tel="ngModel">
+                    <div class="mb-3"><label class="form-label" for="tel"><strong>Tel Ecole</strong></label>
+                      <input class="form-control" type="tel" id="tel" placeholder="+2120600000000" [(ngModel)]="ecole.telephone" name="tel" required #tel="ngModel" [disabled]="isnotEcole">
                       <div *ngIf="tel.invalid && tel.touched" class="text-danger">
                         Tel Ecole is required
                       </div>
@@ -48,7 +43,7 @@
             </div>
             <div class="card-body">
                 <div class="mb-3"><label class="form-label" for="address"><strong>Address</strong></label>
-                  <input class="form-control" type="text" id="adresse" placeholder="Sunset Blvd, 38" [(ngModel)]="ecole.adresse" name="adresse" required #adresse="ngModel">
+                  <input class="form-control" type="text" id="adresse" placeholder="Sunset Blvd, 38" [(ngModel)]="ecole.adresse" name="adresse" required #adresse="ngModel" [disabled]="isnotEcole">
                   <div *ngIf="adresse.invalid && adresse.touched" class="text-danger">
                     Adresse Ecole is required
                   </div>
@@ -56,7 +51,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="mb-3"><label class="form-label" for="city"><strong>Longitude</strong></label>
-                      <input class="form-control" type="number" id="longtitude" placeholder="0.1654654" [(ngModel)]="ecole.longtitude" value="0" name="longtitude" required #lg="ngModel" (ngModelChange)="validate0(lg)">
+                      <input class="form-control" type="number" id="longtitude" placeholder="0.1654654" [(ngModel)]="ecole.longtitude" value="0" name="longtitude" required #lg="ngModel" (ngModelChange)="validate0(lg)" [disabled]="isnotEcole">
                       <div *ngIf="valid && lg.touched" class="text-danger">
                         Longtitude cannot be 0
                       </div>
@@ -64,14 +59,16 @@
                   </div>
                   <div class="col">
                     <div class="mb-3"><label class="form-label" for="country"><strong>Latitude</strong></label>
-                      <input class="form-control" type="number" id="latitude" placeholder="0.123456" [(ngModel)]="ecole.latitude" value="0" name="latitude" required #lat="ngModel" (ngModelChange)="validate0(lat)">
+                      <input class="form-control" type="number" id="latitude" placeholder="0.123456" [(ngModel)]="ecole.latitude" value="0" name="latitude" required #lat="ngModel" (ngModelChange)="validate0(lat)" [disabled]="isnotEcole">
                       <div *ngIf="valid && lat.touched" class="text-danger">
                         Latitude cannot be 0
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Enregistrer</button></div>
+                <div class="mb-3" *ngIf="ecoleId==0"><button class="btn btn-primary btn-sm" type="submit" [hidden]="isnotEcole">Enregistrer</button></div>
+                <div class="mb-3" *ngIf="ecoleId!=0"><button class="btn btn-primary btn-sm" type="submit" [hidden]="isnotEcole">Modifier</button></div>
+
             </div>
           </div>
         </form>

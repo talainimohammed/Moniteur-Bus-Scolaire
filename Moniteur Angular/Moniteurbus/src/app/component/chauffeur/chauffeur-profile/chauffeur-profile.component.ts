@@ -23,14 +23,30 @@ export class ChauffeurProfileComponent implements OnInit{
   busupdate: Bus=new Bus();
   submitted = false;
   id: number=0;
+  isnotEcole:boolean=false;
   constructor( private chauffeurService:ChauffeurService,private busService:BusService,private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.userData= JSON.parse(localStorage.getItem('userData') as string);
     this.id_ecole = this.userData.idecole ?? 0;
-    this.getBus(this.id_ecole);
     if(this.route.snapshot.params['id']!=null){
       this.id= this.route.snapshot.params['id'];
-      this.getChauffeur(this.id);
+      if(this.userData.roles=="PARENT"){
+        this.isnotEcole=true;
+        console.log("this is parent with bus id "+this.id);
+        this.getbusByid(this.id);
+      }
+      else if(this.userData.roles=="CHAUFFEUR"){
+        console.log("this is Chauffeur with id "+this.id);
+        this.isnotEcole=true;
+        this.getChauffeur(this.id);
+      }
+      else{
+        this.getChauffeur(this.id);
+        this.getBus(this.id_ecole);
+      }
+    }
+    else{
+      this.getBus(this.id_ecole);
     }
   }
   onSubmit(form: NgForm) {
@@ -66,14 +82,27 @@ export class ChauffeurProfileComponent implements OnInit{
           console.log(error);
         }
       );
-    }
+  }
+  getbusByid(id: number): void {
+    this.busService.getBusById(id)
+      .subscribe(
+        data => {
+          this.busupdate = data as Bus;
+          console.log(data);
+          this.getChauffeur(this.busupdate.idchauffeur ?? 0);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
   getChauffeur(id: number): void {
     this.chauffeurService.getChauffeur(id)
       .subscribe(
         data => {
           this.chauffeur = data;
           console.log(data);
-          this.busupdate=this.bus?.find(x=>x.idchauffeur==this.chauffeur.idUtilisateur)!;          
+          this.busupdate=this.bus?.find(x=>x.idchauffeur==this.chauffeur.idUtilisateur)!;    
         },
         error => {
           console.log(error);

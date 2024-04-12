@@ -26,6 +26,9 @@ export class EtudiantService {
   getEtudiant(id: any): Observable<Etudiant> {
     return this.httpclient.get<Etudiant>(this.apiurl + "/" + id,this.requestOptions);
   }
+  getEtudiantByemail(email: string): Observable<Etudiant> {
+    return this.httpclient.get<Etudiant>(this.apiurl + "/email/" + email,this.requestOptions);
+  }
   updateEtudiant(id: any, data: any) {
     return this.httpclient.put(this.apiurl + "/" + id, data,this.requestOptions);
   }

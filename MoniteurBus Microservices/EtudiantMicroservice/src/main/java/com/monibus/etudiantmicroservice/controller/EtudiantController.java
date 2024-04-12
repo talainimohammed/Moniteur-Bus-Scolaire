@@ -40,6 +40,13 @@ public class EtudiantController {
         return new ResponseEntity<>(etudiantDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<EtudiantDTO> getEtudiantByEmail(@PathVariable(value = "email") String email){
+        EtudiantDTO etudiantDTO=this.iEtudiant.afficherEtudiantByEmail(email);
+        return new ResponseEntity<>(etudiantDTO, HttpStatus.OK);
+    }
+
+
     @PostMapping
     public ResponseEntity<EtudiantDTO> addEtudiant(@RequestBody @Valid EtudiantDTO etudiantDTO){
         EtudiantDTO etudiantDTO1=this.iEtudiant.addEtudiant(etudiantDTO);

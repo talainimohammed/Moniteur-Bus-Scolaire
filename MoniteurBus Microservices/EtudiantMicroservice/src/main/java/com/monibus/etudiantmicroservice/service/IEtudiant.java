@@ -10,6 +10,8 @@ public interface IEtudiant {
     public EtudiantDTO modEtudiant(EtudiantDTO etudiantDTO,long id);
     public List<EtudiantDTO> afficherEtudiants();
     public EtudiantDTO afficherEtudiantById(long id);
+    public EtudiantDTO afficherEtudiantByEmail(String email);
+
     public List<EtudiantDTO> afficherEtudiantsByEcoleId(long id);
     public boolean delEtudiant(long id);
 

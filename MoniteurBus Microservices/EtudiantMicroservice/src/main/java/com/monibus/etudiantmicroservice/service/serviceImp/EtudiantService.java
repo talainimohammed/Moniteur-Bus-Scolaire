@@ -119,6 +119,20 @@ public class EtudiantService implements IEtudiant {
     }
 
     @Override
+    public EtudiantDTO afficherEtudiantByEmail(String email) {
+        Etudiant etudiant=this.etudiantRepository.findByEmail(email);
+        if(etudiant!=null){
+            LocationDTO locationDTO=this.locationClient.getLocation(etudiant.getLocationId()).getBody();
+            if(locationDTO==null) throw new NullPointerException();
+            EtudiantDTO etudiantDTO=modelMapper.map(etudiant,EtudiantDTO.class);
+            etudiantDTO.setLatitude(locationDTO.getLatitude());
+            etudiantDTO.setLongtitude(locationDTO.getLongtitude());
+            return etudiantDTO;
+        }
+        return null;
+    }
+
+    @Override
     public List<EtudiantDTO> afficherEtudiantsByEcoleId(long idEcole) {
         List<EtudiantDTO> etudiants=this.etudiantRepository.findByEcoleIdAndDeletedFalse(idEcole).stream().map(e->modelMapper.map(e,EtudiantDTO.class)).toList();
         return etudiants ;

@@ -9,6 +9,7 @@ import { SuiviBus } from '../../models/suivi-bus';
 import { EtudiantService } from '../../services/etudiant.service';
 import { Etudiant } from '../../models/etudiant';
 import { FirebaseService } from '../../services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-suivi-bus',
   templateUrl: './suivi-bus.component.html',
@@ -36,23 +37,26 @@ export class SuiviBusComponent implements OnInit{
     markerPositions: google.maps.LatLngLiteral[] = [];
     check=false;
     markerPosition: google.maps.LatLngLiteral ={lat: 0, lng: 0};
-  
-    constructor(private suiviBus:FirebaseService,private etudiantService:EtudiantService){}
+    idEtudiant:number=0;
+    constructor(private suiviBus:FirebaseService,private etudiantService:EtudiantService,private route: ActivatedRoute){}
   
     ngOnInit() {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-      });
+      if(this.route.snapshot.params['id']!=null){
+        this.idEtudiant= this.route.snapshot.params['id'];
+        this.retrieveEtudiant(this.idEtudiant);
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.center = {
+            lat: this.etudiant.latitude ?? position.coords.latitude,
+            lng: this.etudiant.longtitude ?? position.coords.longitude,
+          };
+        });
+      }
      // this.sendtofirebase();
       /*setInterval(() => {
       this.sendloc();
     }, 5000);*/
       this.check=true;
-      this.retrieveEtudiant(5);
-      this.getRealTimeLoc(3);
+      this.getRealTimeLoc(this.etudiant.busId ?? 0);
     }
     circleCenter: google.maps.LatLngLiteral = {lat: 33.667782574792184, lng: -7.397301689965827};
   
@@ -89,7 +93,7 @@ export class SuiviBusComponent implements OnInit{
         delay(2000)
       ).subscribe((data:any)=>{
         this.markerPositions=[];
-        this.markerPositions.push(this.markerPosition);
+        //this.markerPositions.push(this.markerPosition);
         if(data.length!=0){      
         let lastpos=data[id];
         console.log(data[id]);
@@ -102,7 +106,7 @@ export class SuiviBusComponent implements OnInit{
           this.markerPositions.push({lat: d.latitude, lng: d.longtitude});
         });*/
         this.markerPositions.push(this.destinationpos);  
-        this.perimeternotif(this.markerPositions[1],this.destinationpos);
+        this.perimeternotif(this.markerPositions[0],this.destinationpos);
       });
     }
     saveRealTimeLoc(){

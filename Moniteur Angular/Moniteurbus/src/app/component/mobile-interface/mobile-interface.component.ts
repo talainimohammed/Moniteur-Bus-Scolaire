@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { EtudiantService } from '../../services/etudiant.service';
 import { Etudiant } from '../../models/etudiant';
+import { Userdata } from '../../models/userdata';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-mobile-interface',
@@ -9,17 +11,21 @@ import { Etudiant } from '../../models/etudiant';
 })
 export class MobileInterfaceComponent {
 
-  idEtudiant: number=5;
+  idEtudiant: number=0;
+  emailEtudiant: string='';
   etudiant:Etudiant=new Etudiant();
+  userData:Userdata=new Userdata();
 
 
   constructor(private etudiantService:EtudiantService) { }
 
   ngOnInit() {
-    this.retrieveEtudiant(this.idEtudiant);
+    this.userData= JSON.parse(localStorage.getItem('userData') as string);
+    this.emailEtudiant = this.userData.username ?? '';
+    this.retrieveEtudiant(this.emailEtudiant);
   }
-  retrieveEtudiant(id:number){
-    this.etudiantService.getEtudiant(id).subscribe(
+  retrieveEtudiant(email:string){
+    this.etudiantService.getEtudiantByemail(email).subscribe(
       (data)=>{
         this.etudiant=data as Etudiant;
         console.log(data);

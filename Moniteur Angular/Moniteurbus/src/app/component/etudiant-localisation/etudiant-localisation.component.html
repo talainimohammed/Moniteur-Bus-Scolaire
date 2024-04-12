@@ -1,16 +1,28 @@
-<google-map 
-  height="400px"
-  width="750px"
-  [center]="center"
-  [zoom]="zoom"
-  (mapClick)="addMarker($event)">
- <!--<map-marker *ngIf="check" [position]="markerPosition" [options]="markerOptions" />-->
-   <!-- @for (position of markerPositions; track position) {
-      <map-marker [position]="position" [options]="markerOptions[1]" />
-    }
-    <ng-container *ngFor="let position of markerPositions; let i = index">
-      <map-marker [position]="position" [options]="markerOptions[i]" />
-    </ng-container>-->
-    <map-directions-renderer></map-directions-renderer>
-</google-map>
-<button (click)="sendloc()">send new location</button>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card shadow mb-4 col-xl-10">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="text-primary fw-bold m-0">Etudiant:&nbsp;{{etudiant.nom}}&nbsp;{{etudiant.prenom}}</h6>
+        <div ><a class="btn btn-success">Appeler Etudiant</a></div>
+      </div>
+    <div class="card-body">
+      <google-map 
+        height="400px"
+        width="1000px"
+        [center]="center"
+        [zoom]="zoom"
+        (mapClick)="addMarker($event)">
+      <!--<map-marker *ngIf="check" [position]="markerPosition" [options]="markerOptions" />-->
+        <!-- @for (position of markerPositions; track position) {
+            <map-marker [position]="position" [options]="markerOptions[1]" />
+          }
+          <ng-container *ngFor="let position of markerPositions; let i = index">
+            <map-marker [position]="position" [options]="markerOptions[i]" />
+          </ng-container>-->
+          <map-directions-renderer></map-directions-renderer>
+      </google-map>
+      <button (click)="sendloc()">send new location</button>
+    </div>
+    </div> 
+  </div>
+</div>

@@ -5,4 +5,5 @@ export class Userdata {
     idecole?:number;
     _token?:string;
     _expiration?:Date ;
+    username?: string;
 }
