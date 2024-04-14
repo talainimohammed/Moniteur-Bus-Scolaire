@@ -17,7 +17,7 @@ import {AuthGuardService} from "./services/auth-guard.service";
 import { RegistrationComponent } from './component/registration/registration.component';
 
 export const routes: Routes = [
- /* { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: DashboardComponent,canActivate:[AuthGuardService],data:{role:['ADMINISTRATEUR', 'Ecole']} },
   { path: 'ecole', component: EcoleComponent,canActivate:[AuthGuardService],data:{role:['ADMINISTRATEUR', 'Ecole']} },
   { path: 'ecole/:id', component: EcoleComponent,canActivate:[AuthGuardService],data:{role:['ADMINISTRATEUR', 'Ecole', 'CHAUFFEUR']} },
@@ -37,28 +37,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'utilisateurs', component: UtilisateurComponent,canActivate:[AuthGuardService],data:{role:['ADMINISTRATEUR', 'Ecole']} },
   { path: 'necole', component: RegistrationComponent,canActivate:[AuthGuardService],data:{role:['ADMINISTRATEUR']} },
-  { path: '**', redirectTo: '/not-found' }*/
-
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: DashboardComponent },
-  { path: 'ecole', component: EcoleComponent },
-  { path: 'ecole/:id', component: EcoleComponent },
-  { path: 'eleves', component: EtudiantComponent },
-  { path: 'bus', component: BusComponent },
-  { path: 'busprofile', component: BusProfileComponent },
-  { path: 'busprofile/:id', component: BusProfileComponent},
-  { path: 'chauffeurs', component: ChauffeurComponent},
-  { path: 'chauffeur', component: ChauffeurProfileComponent },
-  { path: 'chauffeur/:id', component: ChauffeurProfileComponent },
-  { path: 'eleve', component: EtudiantProfileComponent },
-  { path: 'eleve/:id', component: EtudiantProfileComponent },
-  { path: 'suivibus/:id', component: SuiviBusComponent},
-  { path: 'etudloc', component: EtudiantLocalisationComponent },
-  { path: 'etudloc/:id', component: EtudiantLocalisationComponent },
-  { path: 'mobile', component: MobileInterfaceComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'utilisateurs', component: UtilisateurComponent},
-  { path: 'necole', component: RegistrationComponent},
   { path: '**', redirectTo: '/not-found' }
 ];
 @NgModule({

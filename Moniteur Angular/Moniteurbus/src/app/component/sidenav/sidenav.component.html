@@ -14,7 +14,7 @@
       <li class="nav-item"> <a class="nav-link" *ngIf="isEcole" routerLink="/bus"><i class="fas fa-user"></i><span>Bus</span></a></li>
       <li class="nav-item"> <a class="nav-link" *ngIf="isParent || isEcole" routerLink="/suivibus"><i class="fas fa-user"></i><span>Suivi Bus</span></a></li>
       <li class="nav-item"> <a class="nav-link" *ngIf="isChauffeur" routerLink="/etudloc"><i class="fas fa-user"></i><span>Etudiant Localisation</span></a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/mobile"><i class="fas fa-table"></i><span>Mobile</span></a></li>
+      <li class="nav-item"><a class="nav-link" *ngIf="isParent || isEcole"  routerLink="/mobile"><i class="fas fa-table"></i><span>Mobile</span></a></li>
       <li class="nav-item"><a class="nav-link" *ngIf="isEcole" routerLink="/utilisateurs"><i class="fas fa-table"></i><span>Utilisateurs</span></a></li>
       <li class="nav-item"><a class="nav-link" *ngIf="isAdmin" routerLink="/necole"><i class="fas fa-table"></i><span>Nouveau Ecole</span></a></li>
       <li class="nav-item"><a class="nav-link" routerLink="/login"><i class="far fa-user-circle"></i><span>Login</span></a></li>
