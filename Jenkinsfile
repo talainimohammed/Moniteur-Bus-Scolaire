@@ -7,32 +7,32 @@ tools {
   stages{
         stage('Build'){
             steps{
-                bat "mvn -f 'MoniteurBus Microservices/api-gateway/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/eureka-server/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/EcoleMicroservice/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/EtudiantMicroservice/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/BusMicroservice/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/LocationMicroservice/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/RealTimeLocalisationMicroservice/pom.xml' -DskipTests  clean install"
-                bat "mvn -f 'MoniteurBus Microservices/UtilisateurMicroservice/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/api-gateway/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/eureka-server/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/EcoleMicroservice/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/EtudiantMicroservice/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/BusMicroservice/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/LocationMicroservice/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/RealTimeLocalisationMicroservice/pom.xml' -DskipTests  clean install"
+                bat "mvn -f 'MoniteurBusMicroservices/UtilisateurMicroservice/pom.xml' -DskipTests  clean install"
             }
         }
         stage('Test Ecole'){
               steps{
-                  bat "mvn -f 'MoniteurBus Microservices/EcoleMicroservice/pom.xml' test -Dtest=EcoleServiceTest"
-                  bat "mvn -f 'MoniteurBus Microservices/EcoleMicroservice/pom.xml' test -Dtest=EcoleControllerTest"
+                  bat "mvn -f 'MoniteurBusMicroservices/EcoleMicroservice/pom.xml' test -Dtest=EcoleServiceTest"
+                  bat "mvn -f 'MoniteurBusMicroservices/EcoleMicroservice/pom.xml' test -Dtest=EcoleControllerTest"
               }
         }
         stage('Test Utilisateur'){
                       steps{
-                          bat "mvn -f 'MoniteurBus Microservices/UtilisateurMicroservice/pom.xml' test -Dtest=UtilisateurControllerTest"
-                          bat "mvn -f 'MoniteurBus Microservices/UtilisateurMicroservice/pom.xml' test -Dtest=UtilisateurServiceTest"
+                          bat "mvn -f 'MoniteurBusMicroservices/UtilisateurMicroservice/pom.xml' test -Dtest=UtilisateurControllerTest"
+                          bat "mvn -f 'MoniteurBusMicroservices/UtilisateurMicroservice/pom.xml' test -Dtest=UtilisateurServiceTest"
                       }
         }
         stage('Test Etudiant'){
                       steps{
-                          bat "mvn -f 'MoniteurBus Microservices/EtudiantMicroservice/pom.xml' test -Dtest=EtudiantControllerTest"
-                          bat "mvn -f 'MoniteurBus Microservices/EtudiantMicroservice/pom.xml' test -Dtest=EtudiantServiceTest"
+                          bat "mvn -f 'MoniteurBusMicroservices/EtudiantMicroservice/pom.xml' test -Dtest=EtudiantControllerTest"
+                          bat "mvn -f 'MoniteurBusMicroservices/EtudiantMicroservice/pom.xml' test -Dtest=EtudiantServiceTest"
                       }
         }
   }
