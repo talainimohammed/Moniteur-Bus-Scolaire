@@ -26,6 +26,7 @@ class UtilisateurServiceTest {
         utilisateurDTO.setPrenom("prenom");
         utilisateurDTO.setRoleEnum(RoleEnum.CHAUFFEUR);
         utilisateurDTO.setEmail("login");
+        utilisateurDTO.setPassword("password");
         utilisateurDTO.setIdUtilisateur(1L);
         utilisateurDTO.setAdresse("adresse");
         utilisateurDTO.setTel("telephone");
@@ -48,6 +49,7 @@ class UtilisateurServiceTest {
 
     @Test
     void modUtilisateur() {
+        UtilisateurDTO utilisateur1 = iUtilisateur.addUtilisateur(utilisateurDTO);
         UtilisateurDTO utilisateur = iUtilisateur.modUtilisateur(utilisateurDTO, 1L);
         assertEquals(utilisateur.getNom(), utilisateurDTO.getNom());
         assertEquals(utilisateur.getPrenom(), utilisateurDTO.getPrenom());

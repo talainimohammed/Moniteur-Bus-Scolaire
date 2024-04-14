@@ -38,7 +38,7 @@ export class SuiviBusComponent implements OnInit{
     check=false;
     markerPosition: google.maps.LatLngLiteral ={lat: 0, lng: 0};
     idEtudiant:number=0;
-    constructor(private suiviBus:FirebaseService,private etudiantService:EtudiantService,private route: ActivatedRoute){}
+    constructor(private suiviBus:SuiviBusService,private etudiantService:EtudiantService,private route: ActivatedRoute){}
   
     ngOnInit() {
       if(this.route.snapshot.params['id']!=null){
@@ -89,14 +89,14 @@ export class SuiviBusComponent implements OnInit{
         console.log(loc);*/
     }
     getRealTimeLoc(id:number){
-      this.suiviBus.getRealTimeLoc().pipe(
+      this.suiviBus.getRealTimeLocByBusId(id).pipe(
         delay(2000)
       ).subscribe((data:any)=>{
         this.markerPositions=[];
         //this.markerPositions.push(this.markerPosition);
-        if(data.length!=0){      
-        let lastpos=data[id];
-        console.log(data[id]);
+        if(data!=null){      
+        let lastpos=data;
+        console.log(data);
         this.markerPositions.push({lat: lastpos.latitude, lng: lastpos.longtitude});
         }
         else{      
@@ -110,19 +110,11 @@ export class SuiviBusComponent implements OnInit{
       });
     }
     saveRealTimeLoc(){
-      this.currentpos.idbus=3;    
+      this.currentpos.idbus=this.etudiant.busId ?? 0;    
       this.currentpos.latitude=this.markerPositions[1].lat+0.0005;
       this.currentpos.longtitude=this.markerPositions[1].lng+0.0001;
-      let groupedData = {
-        [this.currentpos.idbus]: {
-          idbus: this.currentpos.idbus,
-          latitude: this.currentpos.latitude,
-          longtitude: this.currentpos.longtitude
-        }
-      };
-      let groupedDataJson = JSON.stringify(groupedData);
-      this.suiviBus.addRealTimeLoc(this.currentpos.idbus,groupedDataJson).subscribe((data:any)=>{
-        this.getRealTimeLoc(3);
+      this.suiviBus.addRealTimeLoc(this.currentpos).subscribe((data:any)=>{
+        this.getRealTimeLoc(this.etudiant.busId ?? 0);
       });
     }
     startLocation(){

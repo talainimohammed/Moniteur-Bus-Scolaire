@@ -11,6 +11,8 @@ public interface ILocation {
     public List<LocationDTO> afficherLocations();
     public List<LocationDTO> afficherLocationsByIdBus(long idbus);
     public LocationDTO afficherLocationById(long id);
+    public LocationDTO afficherLocationByIdBus(long id);
+
     public boolean delLocation(long id);
 
 }

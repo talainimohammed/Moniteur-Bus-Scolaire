@@ -21,12 +21,21 @@ public class LocationService implements ILocation {
     @Override
     public LocationDTO addLocation(LocationDTO locationDTO) {
         if(locationDTO==null)throw new NullPointerException();
-        return this.modelMapper.map(this.locationRepository.save(this.modelMapper.map(locationDTO, Location.class)), LocationDTO.class);
+        if(this.afficherLocationByIdBus(locationDTO.getIdbus())!=null){
+            System.out.println("Location already exist for this bus"+this.afficherLocationByIdBus(locationDTO.getIdbus()).getIdLocation());
+            return this.modLocation(locationDTO,this.afficherLocationByIdBus(locationDTO.getIdbus()).getIdLocation());
+        }
+        else {
+            System.out.println("Location added");
+            return this.modelMapper.map(this.locationRepository.save(this.modelMapper.map(locationDTO, Location.class)), LocationDTO.class);
+        }
     }
 
     @Override
     public LocationDTO modLocation(LocationDTO locationDTO,long id) {
         if(locationDTO==null)throw new NullPointerException();
+        Location location=this.locationRepository.findById(id).orElse(null);
+        locationDTO.setIdLocation(id);
         return this.modelMapper.map(this.locationRepository.save(this.modelMapper.map(locationDTO, Location.class)), LocationDTO.class);
 
     }
@@ -38,15 +47,22 @@ public class LocationService implements ILocation {
 
     @Override
     public List<LocationDTO> afficherLocationsByIdBus(long idbus) {
-
         return this.locationRepository.findAllByIdbus(idbus).stream().map(l->this.modelMapper.map(l, LocationDTO.class)).toList();
     }
+
 
     @Override
     public LocationDTO afficherLocationById(long id) {
         Location location=this.locationRepository.findById(id).orElse(null);
         if(location==null)throw new NullPointerException();
         return this.modelMapper.map(location, LocationDTO.class);
+    }
+
+    @Override
+    public LocationDTO afficherLocationByIdBus(long id) {
+        Location location=this.locationRepository.findByIdbus(id);
+        if(location!=null)return this.modelMapper.map(location, LocationDTO.class);
+        return null;
     }
 
     @Override

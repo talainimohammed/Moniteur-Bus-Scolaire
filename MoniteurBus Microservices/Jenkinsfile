@@ -1,0 +1,32 @@
+pipeline{
+  agent any
+tools {
+        maven "Maven"
+    }
+
+  stages{
+        stage('Build'){
+            steps{
+                bat 'mvn -Dmaven.test.skip=true clean install'
+            }
+        }
+        stage('Test Ecole'){
+              steps{
+                  bat 'mvn test -Dtest=EcoleServiceTest'
+                  bat 'mvn test -Dtest=EcoleControllerTest'
+              }
+        }
+        stage('Test Utilisateur'){
+                      steps{
+                          bat 'mvn test -Dtest=UtilisateurControllerTest'
+                          bat 'mvn test -Dtest=UtilisateurServiceTest'
+                      }
+        }
+        stage('Test Etudiant'){
+                      steps{
+                          bat 'mvn test -Dtest=EtudiantControllerTest'
+                          bat 'mvn test -Dtest=EtudiantServiceTest'
+                      }
+        }
+  }
+}

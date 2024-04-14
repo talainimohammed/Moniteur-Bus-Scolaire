@@ -43,7 +43,7 @@ export class EtudiantLocalisationComponent implements OnInit{
     check=false;
     markerPosition: google.maps.LatLngLiteral ={lat: 0, lng: 0};
   
-    constructor(private suiviBus:FirebaseService,private busService:BusService,private etudiantService:EtudiantService,private http: HttpClient,private route:ActivatedRoute){}
+    constructor(private suiviBus:SuiviBusService,private busService:BusService,private etudiantService:EtudiantService,private http: HttpClient,private route:ActivatedRoute){}
   
     origin = { lat: 33.70038747096962, lng: -7.370860713061521 };
     destination = { lat: 25, lng: 13 };
@@ -63,7 +63,7 @@ export class EtudiantLocalisationComponent implements OnInit{
       this.check=true;
       this.retrieveEtudiant(this.idetudiant);
       setInterval(() => {
-        console.log('Hello');
+        console.log('get localisation every 10s');
         if (this.bus) {
           this.getRealTimeLoc(this.bus.idBus ?? 0);
         }
@@ -121,15 +121,15 @@ export class EtudiantLocalisationComponent implements OnInit{
         console.log(loc);*/
     }
     getRealTimeLoc(id:number){
-      this.suiviBus.getRealTimeLoc().pipe(
+      this.suiviBus.getRealTimeLocByBusId(id).pipe(
         delay(2000)
       ).subscribe((data:any)=>{
         this.markerPositions=[];
         this.markerPositions.push(this.markerPosition);
-        if(data.length!=0){      
-        let lastpos=data[id];
-        console.log(data[id]);
-        this.markerPositions.push({lat: lastpos.latitude, lng: lastpos.longtitude});
+        if(data!=null){      
+        let lastpos=data[0] as SuiviBus;
+        console.log(lastpos);
+        this.markerPositions.push({lat: lastpos.latitude ?? 0, lng: lastpos.longtitude ?? 0});
         }
         else{      
           this.markerPositions.push(this.markerPosition);
@@ -180,33 +180,15 @@ export class EtudiantLocalisationComponent implements OnInit{
       //});
     }
     saveRealTimeLoc(currentpos:any){
-      let groupedData = {
-        [currentpos.idbus]: {
-          idbus: this.currentpos.idbus,
-          latitude: this.currentpos.latitude,
-          longtitude: this.currentpos.longtitude
-        }
+      const gdata:any = {
+        idbus: this.currentpos.idbus,
+        latitude: this.currentpos.latitude,
+        longtitude: this.currentpos.longtitude
       };
-      let groupedDataJson = JSON.stringify(groupedData);
-      this.suiviBus.getRealTimeLoc().subscribe((data:any)=>{
-        if(data.length!=0 && data[currentpos.idbus] != null){      
-          let lastpos=data[currentpos.idbus];
-          console.log(lastpos);
-          this.suiviBus.updateRealTimeLoc(groupedDataJson).subscribe((data:any)=>{
-            this.getRealTimeLoc(this.currentpos.idbus ?? 0);
-          });
-        }
-        else{     
-            const gdata:any={
-              idbus: this.currentpos.idbus,
-              latitude: this.currentpos.latitude,
-              longtitude: this.currentpos.longtitude
-            } 
-            this.suiviBus.addRealTimeLoc(currentpos.idbus,gdata).subscribe((data:any)=>{
-              this.getRealTimeLoc(this.currentpos.idbus ?? 0);
-            });
-        }
+      this.suiviBus.addRealTimeLoc(gdata).subscribe((data:any)=>{
+        console.log(data);
       });
+      
 
     }
     startLocation(){

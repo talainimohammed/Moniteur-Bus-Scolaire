@@ -4,13 +4,12 @@ import com.monibus.ecolemicroservice.dto.EcoleDTO;
 import com.monibus.ecolemicroservice.entity.Ecole;
 import com.monibus.ecolemicroservice.repository.EcoleRepository;
 import com.monibus.ecolemicroservice.service.IEcole;
-import com.monibus.location.LocationClient;
-import com.monibus.location.LocationDTO;
+import com.monibus.ecolemicroservice.feignclients.location.LocationClient;
+import com.monibus.ecolemicroservice.feignclients.location.LocationDTO;
 import jakarta.ws.rs.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 @Service
 public class EcoleService implements IEcole {

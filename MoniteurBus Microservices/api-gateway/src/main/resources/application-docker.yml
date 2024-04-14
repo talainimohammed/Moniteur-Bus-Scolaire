@@ -1,0 +1,68 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: ecole
+          uri: lb://ECOLE
+          predicates:
+              - Path=/api/v1/ecole/**
+          filters:
+            - AuthenticationFilter
+        - id: bus
+          uri: lb://BUS
+          predicates:
+              - Path=/api/v1/bus/**
+          filters:
+            - AuthenticationFilter
+        - id: utilisateur
+          uri: lb://UTILISATEUR
+          predicates:
+            - Path=/api/v1/utilisateur/**
+          filters:
+            - AuthenticationFilter
+        - id: Notification
+          uri: lb://NOTIFICATION
+          predicates:
+              - Path=/api/v1/notification/**
+          filters:
+            - AuthenticationFilter
+        - id: location
+          uri: lb://LOCATION
+          predicates:
+              - Path=/api/location/**
+          filters:
+            - AuthenticationFilter
+        - id: etudiant
+          uri: lb://ETUDIANT
+          predicates:
+              - Path=/api/v1/etudiant/**
+          filters:
+            - AuthenticationFilter
+        - id: realtime
+          uri: lb://REALTIME
+          predicates:
+            - Path=/api/v1/realtimeloc/**
+          filters:
+            - AuthenticationFilter
+
+
+server:
+  port: 3333
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+    register-with-eureka: true

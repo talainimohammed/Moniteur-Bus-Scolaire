@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LocationRepository extends JpaRepository<Location,Long> {
     List<Location> findAllByIdbus(long id);
+    Location findByIdbus(long idbus);
 }

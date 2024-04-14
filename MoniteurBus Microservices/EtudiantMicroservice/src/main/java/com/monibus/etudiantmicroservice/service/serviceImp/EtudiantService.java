@@ -4,11 +4,11 @@ import com.monibus.etudiantmicroservice.dto.EtudiantDTO;
 import com.monibus.etudiantmicroservice.entity.Etudiant;
 import com.monibus.etudiantmicroservice.repository.EtudiantRepository;
 import com.monibus.etudiantmicroservice.service.IEtudiant;
-import com.monibus.location.LocationClient;
-import com.monibus.location.LocationDTO;
-import com.monibus.utilisateur.RoleEnum;
-import com.monibus.utilisateur.UtilisateurClient;
-import com.monibus.utilisateur.UtilisateurDTO;
+import com.monibus.etudiantmicroservice.feignclients.location.LocationClient;
+import com.monibus.etudiantmicroservice.feignclients.location.LocationDTO;
+import com.monibus.etudiantmicroservice.feignclients.utilisateur.RoleEnum;
+import com.monibus.etudiantmicroservice.feignclients.utilisateur.UtilisateurClient;
+import com.monibus.etudiantmicroservice.feignclients.utilisateur.UtilisateurDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

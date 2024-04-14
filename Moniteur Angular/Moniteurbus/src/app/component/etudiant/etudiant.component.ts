@@ -9,6 +9,7 @@ import { ChauffeurService } from '../../services/chauffeur.service';
 import { Chauffeur } from '../../models/chauffeur';
 import { BusService } from '../../services/bus.service';
 import { Bus } from '../../models/bus';
+import { SuiviBusService } from '../../services/suivi-bus.service';
 
 @Component({
   selector: 'app-etudiant',
@@ -24,7 +25,7 @@ export class EtudiantComponent implements OnInit{
   currentpos:SuiviBus=new SuiviBus();
   center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
   bus:Bus=new Bus();
-  constructor(private suiviBus:FirebaseService,private busService:BusService,private etudiantService:EtudiantService) { }
+  constructor(private suiviBus:SuiviBusService,private busService:BusService,private etudiantService:EtudiantService) { }
 
   ngOnInit(): void {
     this.userData= JSON.parse(localStorage.getItem('userData') as string);
@@ -35,20 +36,20 @@ export class EtudiantComponent implements OnInit{
     if(this.userData.roles?.includes("CHAUFFEUR")){
       this.getBusByChauffeurId(this.userData.id ?? 0);
       this.retrieveEtudiantsByBusId();
-      /*setInterval(() => {
-        console.log('Hello');
+      setInterval(() => {
+        console.log('send localisation every 5s');
           navigator.geolocation.getCurrentPosition((position) => {
             this.center = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-            this.currentpos.idbus=3;    
+            this.currentpos.idbus=this.bus.idBus;    
             this.currentpos.latitude=this.center.lat;
             this.currentpos.longtitude=this.center.lng;
             this.saveRealTimeLoc(this.currentpos);
           });    
         
-      }, 5000);*/
+      }, 10000);
     }
   }
   getBusByChauffeurId(id:number){
@@ -62,32 +63,14 @@ export class EtudiantComponent implements OnInit{
     );
   }
   saveRealTimeLoc(currentpos:any){
-    let groupedData = {
-      [currentpos.idbus]: {
-        idbus: this.currentpos.idbus,
-        latitude: this.currentpos.latitude,
-        longtitude: this.currentpos.longtitude
-      }
-    };
-    let groupedDataJson = JSON.stringify(groupedData);
-    this.suiviBus.getRealTimeLoc().subscribe((data:any)=>{
-      if(data.length!=0 && data[currentpos.idbus] != null){      
-        let lastpos=data[currentpos.idbus];
-        console.log(lastpos);
-        this.suiviBus.updateRealTimeLoc(groupedDataJson).subscribe((data:any)=>{
-        });
-      }
-      else{     
         const gdata:any = {
           idbus: this.currentpos.idbus,
           latitude: this.currentpos.latitude,
           longtitude: this.currentpos.longtitude
-        }
-          this.suiviBus.addRealTimeLoc(currentpos.idbus,gdata).subscribe((data:any)=>{
-            console.log(data);
-          });
-      }
-    });
+        };
+        this.suiviBus.addRealTimeLoc(gdata).subscribe((data:any)=>{
+          console.log(data);
+        });
   }
   retrieveEtudiants(){
     this.etudiantService.getEtudiants(this.id_ecole).subscribe(

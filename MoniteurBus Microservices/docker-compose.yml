@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  monitor-db:
+  monitor-microservice-db:
     container_name: monitor-microservice-db
     image: postgres:16
     environment:
@@ -11,15 +11,125 @@ services:
     volumes:
       - monitor-db:/data/postgres
     ports:
-      - "5229:5432"
+      - "5432:5432"
     networks:
       - db
     restart: unless-stopped
+  # livedb_microservice:
+  #   container_name: livedb_microservice
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_USER: livedb_microservice
+  #     POSTGRES_PASSWORD: livedb_microservice
+  #     PGDATA: /data/postgres
+  #   volumes:
+  #     - live-db:/data/postgres
+  #   ports:
+  #     - "5228:5432"
+  #   networks:
+  #     - db
+  #   restart: unless-stopped
   zipkin:
     container_name: zipkinmonitor
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+#  bus-service:
+    #    container_name: bus-service
+      #build:
+      #   context: .
+    #   dockerfile: BusMicroservice/Dockerfile
+      #  environment:
+    #    - SPRING_PROFILES_ACTIVE=docker
+      #  ports:
+    #    - "5556:5556"
+      #  depends_on:
+    #    - monitor-microservice-db
+    #  restart: unless-stopped
+      #  networks:
+  #    - db
+  # ecole-service:
+  #   container_name: ecole-service
+  #   build:
+  #     context: .
+  #     dockerfile: EcoleMicroservice/Dockerfile
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   ports:
+  #     - "5555:5555"
+  #   depends_on:
+  #     - monitor-microservice-db
+  #   restart: unless-stopped
+  # etudiant-service:
+  #   container_name: etudiant-service
+  #   build:
+  #     context: .
+  #     dockerfile: EtudiantMicroservice/Dockerfile
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   ports:
+  #     - "5557:5557"
+  #   depends_on:
+  #     - monitor-microservice-db
+  #   restart: unless-stopped
+  # localisation-service:
+  #   container_name: localisation-service
+  #   build:
+  #     context: .
+  #     dockerfile: LocationMicroservice/Dockerfile
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   ports:
+  #     - "5558:5558"
+  #   depends_on:
+  #     - monitor-microservice-db
+  #   restart: unless-stopped
+  # utilisateur-service:
+  #   container_name: utilisateur-service
+  #   build:
+  #     context: .
+  #     dockerfile: UtilisateurMicroservice/Dockerfile
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   ports:
+  #     - "5560:5560"
+  #   depends_on:
+  #     - monitor-microservice-db
+  #   restart: unless-stopped
+  # realtime-service:
+  #   container_name: realtime-service
+  #   build:
+  #     context: .
+  #     dockerfile: RealTimeLocalisationMicroservice/Dockerfile
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   ports:
+  #     - "5561:5561"
+  #   depends_on:
+  #     - livedb_microservice
+  #  restart: unless-stopped
+    #  eureka-service:
+    #    container_name: eureka-service
+      #    build:
+      #     context: .
+    #      dockerfile: eureka-server/Dockerfile
+      #   environment:
+    #     - SPRING_PROFILES_ACTIVE=docker
+      #   ports:
+    #     - "8761:8761"
+  #   restart: unless-stopped
+    # gateway-service:
+    #    container_name: gateway-service
+      #   build:
+      #     context: .
+    #      dockerfile: api-gateway/Dockerfile
+      #   environment:
+    #     - SPRING_PROFILES_ACTIVE=docker
+      #  ports:
+    #    - "3333:3333"
+      #  depends_on:
+    #   - eureka-service
+  #  restart: unless-stopped
 
 networks:
   db:
@@ -27,3 +137,4 @@ networks:
 
 volumes:
   monitor-db:
+  live-db:
